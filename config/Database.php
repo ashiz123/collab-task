@@ -1,0 +1,75 @@
+<?php
+
+namespace config;
+use Illuminate\Database\Capsule\Manager as Capsule;
+use PDO;
+use utils\Logger;
+
+class Database{
+
+    private static ?Database $instance = null;
+    private Capsule $capsule;
+
+    private function __construct()
+    {
+        try {
+            $this->capsule = new Capsule;
+            $this->capsule->addConnection([
+                'driver'    => 'mysql',
+                'host'      => '127.0.0.1',
+                'database'  => 'todo_app',
+                'username'  => 'root',
+                'password'  => 'yankee123',
+                'charset'   => 'utf8',
+                'collation' => 'utf8_unicode_ci',
+                'prefix'    => '',
+            ], 'default' );
+    
+           
+            $this->capsule->setAsGlobal();
+            $this->capsule->bootEloquent();
+            $pdo = $this->capsule->getConnection()->getPdo(); //generating pdo instance created by capsule.
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);  // Enabling exceptions on connection failure
+    
+          
+    
+        } catch (\Exception $error) {
+            
+            echo '<h1>Database Connection Error</h1>';
+            echo '<p>Unable to connect to the database. Please try again later.</p>';
+            echo '<p><strong>Error Details:</strong> ' . htmlspecialchars($error->getMessage()) . '</p>';
+            error_log($error->getMessage());
+            Logger::error('Database connection failed: ' . $error->getMessage());
+    
+          
+            exit; 
+        }
+    }
+
+
+    // Static method to get the Singleton instance
+    public static function getInstance(): Database {
+        if(self::$instance === null){
+            self::$instance= new Database();
+        }
+
+        return self::$instance;
+    }
+
+
+    //getCapsule for running queries
+    public function getCapsule() : Capsule {
+        return $this->capsule;
+    }
+
+}
+
+
+
+
+
+
+
+
+
+?>

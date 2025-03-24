@@ -66,7 +66,6 @@ try{
                     View::render('/users/login.php', 'Login');
                     break;
                 } elseif($_SERVER['REQUEST_METHOD'] === 'POST'){
-                    Logger::info($_POST['email']);
                     $userController->login();
                     break;
                 }  

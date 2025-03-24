@@ -8,7 +8,7 @@ use utils\View;
 use utils\Logger;
 use services\TaskService;
 
-
+// controller is use to validate and view or response. It works between service and route. 
 
 class TaskController{
     private $taskModel;
@@ -37,19 +37,26 @@ class TaskController{
 
     public function createTask(){
 
-       //if not post method
+       //validation
         if($_SERVER['REQUEST_METHOD'] !== 'POST'){
             View::render('tasks/add_task.php', 'Add Task');
+
         }   
 
-        //if task is empty.
         $taskName = $_POST['task'] ?? '';
-        if (empty($taskName)) {
+        $description = $_POST['description'] ?? '';
+
+
+        if(empty($taskName)) {
                 View::render('tasks/add_task.php', 'Add Task', ['error' => 'Task name cannot be empty']);
                 return;
             }
+            if(empty($description)){
+                View::render('tasks/add_task.php', 'Add Task', ['error' => "Description cannot be empty"]);
+            }
 
-            if($this->taskService->storeTask($this->taskModel, $taskName))
+        
+            if($this->taskService->storeTask($taskName, $description))
             {
                 $tasks = $this->taskService->allTasks();
                 View::render('tasks/tasks.php', 'Tasks', ['tasks' => $tasks]);
@@ -78,7 +85,7 @@ class TaskController{
         }
         catch(\Exception $e){
             Logger::error("Failed to update task $id status: " . $e->getMessage());
-            header('Location: /tasks'); // Redirect even on error for simplicity
+            header('Location: /tasks'); 
             exit;
         }
     }

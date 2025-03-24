@@ -1,6 +1,9 @@
 <?php
 namespace controllers;
+
+use services\AuthService;
 use models\User;
+use services\UserService;
 use utils\Logger;
 
 // use Respect\Validation\Validator as validation;
@@ -9,8 +12,19 @@ use utils\Logger;
 
 
 class UserController {
+    protected  $userService;
+    protected $authService;
+
+
+
+    public function __construct()
+    {
+        $this->userService = new UserService();
+        $this->authService = new AuthService();
+    }
 
     public function register(){
+        
         $email = trim($_POST['email']);
         $firstname = trim($_POST['firstname']);
         $lastname = trim($_POST['lastname']);
@@ -19,15 +33,12 @@ class UserController {
         $errors = User::validateRegisterUser($email, $firstname, $lastname, $password);
 
        if(empty($errors)){
-        $user = new User;
-        $user->email = $email;
-        $user->firstname = $firstname;
-        $user->lastname = $lastname;
-        $user->password = $password;
-        $user->save();
-
-        echo "Registeration successful";
-       }else{
+       if($this->userService->registerUser($email, $firstname, $lastname, $password)){
+         Logger::info('user registered successfully');
+         header("Location: /login-user");
+       }
+    }
+       else{
         foreach($errors as $error){
             echo "<p> $error </p>";
         }
@@ -37,36 +48,30 @@ class UserController {
     public function login(){
         $email = trim($_POST['email']);
         $password = trim($_POST['password']);
-
         $errors = User::validateLoginUser($email, $password);
+        
        
         if(empty($errors)){
-            $user = User::where('email', $email)->first();
-           
-            if($user && $user->checkPassword($password)){
-                session_start();
-                session_regenerate_id(true); 
-                $_SESSION['auth_user'] =[ 'email' => $user->email, 'firstname' => $user->firstname, 'lastname' => $user->lastname];
-                Logger::info('logged in successful'. $user);
+
+            $user = $this->userService->loginUser($email, $password);
+            if($user !== null){
+                $this->authService->setAuthUser($user);
                 header("Location: /home");
                 exit;
-            }else{
-                $error = "invalid username or password";
-                Logger::info('invalid username or password'. $error);
+            }
+           else{
+            $error = "invalid username or password";
+            Logger::error('invalid username or password'. $error);
             }
         }
 
 
     }
 
+
     public function logout(){
-        session_start();
-        session_unset();
-        session_destroy();
-
-        session_start();
-        $_SESSION['message'] = "You have logged out successfully";
-
+       
+        $this->authService->removeAuthUser();
         header("Location: /home");
         
     }

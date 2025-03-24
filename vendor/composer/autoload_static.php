@@ -39,6 +39,7 @@ class ComposerStaticInit4b3f46cc5aaf35ab7ec7e7f8a4a9721e
         'm' => 
         array (
             'models\\' => 7,
+            'migrations \\' => 12,
         ),
         'i' => 
         array (
@@ -118,6 +119,10 @@ class ComposerStaticInit4b3f46cc5aaf35ab7ec7e7f8a4a9721e
         'models\\' => 
         array (
             0 => __DIR__ . '/../..' . '/models',
+        ),
+        'migrations \\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/migrations',
         ),
         'interfaces\\' => 
         array (

@@ -12,7 +12,7 @@
       <li class="list-group-item d-flex justify-content-between align-items-center">
         <div>
           <h5 class="mb-1"><?= htmlspecialchars($task['task']); ?></h5>
-          <p class="mb-1 text-muted">Create a responsive design for the landing page.</p>
+          <p class="mb-1 text-muted"><?= htmlspecialchars($task['description'])  ?></p>
           <span class="badge bg-primary">In Progress</span>
           <span class="badge bg-warning">High Priority</span>
         </div>

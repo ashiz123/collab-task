@@ -1,19 +1,24 @@
 <?php
 
-use Illuminate\Database\Capsule\Manager as Capsule;
-require_once __DIR__ . '/../config/database.php';
+
+namespace migrations;
+require_once __DIR__ . '/../vendor/autoload.php';
+use config\Database;
 
 
 class CreateUserTable {
 
     public function up(){
-        if(!Capsule::schema()->hasTable('users')){
-            Capsule::schema()->create('users', function($table){
+        $capsule = Database::getInstance()->getCapsule();
+        if(!$capsule::schema()->hasTable('users')){
+            $capsule::schema()->create('users', function($table){
                 $table->increments('id');
                 $table->string('email');
                 $table->string('firstname');
                 $table->string('lastname');
                 $table->string('password');
+                $table->timestamps();
+                
             });
 
             echo 'User Table created successfully . \n';
@@ -24,8 +29,9 @@ class CreateUserTable {
     }
 
     public function down(){
-        if(Capsule::schema()->hasTable('users')){
-            Capsule::schema()->drop('users');
+        $capsule = Database::getInstance()->getCapsule();
+        if($capsule::schema()->hasTable('users')){
+            $capsule::schema()->drop('users');
             echo 'User table dropped successfully . \n';
         }else{
             echo 'User table not exists . \n';

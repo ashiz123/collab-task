@@ -1,13 +1,22 @@
 <?php
 
-require_once __DIR__  . '/../config/database.php';
-use Illuminate\Database\Capsule\Manager as Capsule;
+namespace migrations;
+use config\Database;
+require_once __DIR__ . '/../vendor/autoload.php';
 
 class CreateTasksTable{
 
+    public $capsule;
+
+    public function __construct()
+    {
+        $this->capsule =  Database::getInstance()->getCapsule();
+    }
+
     public function up(){
-        if(!Capsule::schema()->hasTable('tasks')){
-            Capsule::schema()->create('tasks', function($table){
+       
+        if(!$this->capsule::schema()->hasTable('tasks')){
+            $this->capsule::schema()->create('tasks', function($table){
                 $table->increments('id');
                 $table->string('task');
                 $table->string('description');
@@ -22,8 +31,8 @@ class CreateTasksTable{
     }
 
     public function down(){
-        if(Capsule::schema()->hasTable('tasks')){
-            Capsule::schema()->drop('tasks');
+        if($this->capsule::schema()->hasTable('tasks')){
+            $this->capsule::schema()->drop('tasks');
             echo "Table tasks dropped successfully. \n";
         }else{
             echo 'Tasks table does not exsits';

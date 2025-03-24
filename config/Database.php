@@ -47,7 +47,7 @@ class Database{
     }
 
 
-    // Static method to get the Singleton instance
+    // Static method to get the Singleton instance 
     public static function getInstance(): Database {
         if(self::$instance === null){
             self::$instance= new Database();

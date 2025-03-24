@@ -7,7 +7,7 @@ use models\Task;
 interface TaskInterface {
 
     public function allTasks();
-    public function storeTask(Task $taskModel, string $taskName);
+    public function storeTask( string $taskName, string $description);
     public function updateTask(int $id);
 
 }

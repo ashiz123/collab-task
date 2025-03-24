@@ -23,6 +23,7 @@ class User extends Model{
    public function getPasswordAttribute($value){
       return $value;
    }
+   
 
 
   

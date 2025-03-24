@@ -1,6 +1,8 @@
 <?php
-use config\Database;;
-use Illuminate\Database\Capsule\Manager as Capsule;
+
+namespace migrations;
+use config\Database;
+require_once __DIR__ . '/../vendor/autoload.php';
 
 
 class CreateContactTable{
@@ -36,8 +38,9 @@ class CreateContactTable{
     //it uses Capsule::schema()
     public function down(){
         try{
-            if(Capsule::schema()->hasTable('contact')){
-                Capsule::schema()->drop('contact');
+            $capsule = Database::getInstance()->getCapsule();
+            if($capsule::schema()->hasTable('contact')){
+                $capsule::schema()->drop('contact');
                 echo "Contact table dropped successfully . \n";
             }else{
                 echo "Contact table is not exists  . \n";

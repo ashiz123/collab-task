@@ -8,6 +8,8 @@ use models\Task;
 use utils\Logger;
 use utils\View;
 
+// service class is to use to access with database
+
 class TaskService implements TaskInterface{
 
     
@@ -19,17 +21,21 @@ class TaskService implements TaskInterface{
     }
 
 
-    public function storeTask(Task $taskModel, string $taskName){
+    public function storeTask(string $taskName, string $description){
         try{
-            $taskModel->task = $taskName;
-            if($taskModel->save()) {
+            $newTask = new Task();
+            $newTask->task = $taskName;
+            $newTask->description = $description;
+            if($newTask->save()) {
              return true;
+            }else{
+             return false;
             }
 
-            return false;
+            
 
         }catch(Exception $e){
-            Logger::error('Exception while saving task', $e->getMessage());
+            Logger::error('Exception while saving task'. $e->getMessage());
             return false;
         }
         

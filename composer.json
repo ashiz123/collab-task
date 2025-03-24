@@ -11,7 +11,8 @@
             "controllers\\": "controllers/",
             "utils\\" : "utils/",
             "config\\" : "config/",
-           "services\\": "services/",
+            "services\\": "services/",
+            "migrations \\": "migrations/",
             "interfaces\\": "interfaces/"
         }
     },

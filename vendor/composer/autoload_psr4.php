@@ -10,6 +10,7 @@ return array(
     'utils\\' => array($baseDir . '/utils'),
     'services\\' => array($baseDir . '/services'),
     'models\\' => array($baseDir . '/models'),
+    'migrations \\' => array($baseDir . '/migrations'),
     'interfaces\\' => array($baseDir . '/interfaces'),
     'controllers\\' => array($baseDir . '/controllers'),
     'config\\' => array($baseDir . '/config'),

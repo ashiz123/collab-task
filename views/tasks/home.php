@@ -8,4 +8,6 @@ if(isset($_SESSION['auth_user'])){
 }else{
     echo 'not logged in';
 }
+
+
 ?>

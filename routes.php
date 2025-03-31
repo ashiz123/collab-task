@@ -1,11 +1,17 @@
 <?php
 
 
+session_start(); 
+
+
 use config\Database;
 use utils\View;
 use utils\Logger;
+use services\AuthService;
 use controllers\TaskController;
 use controllers\UserController;
+use controllers\ContactController;
+
 
 Database::getInstance();
 
@@ -17,6 +23,8 @@ $userDir = '/views/users/';
 try{
     $taskController = new TaskController();
     $userController = new UserController();
+    $contactController = new ContactController();
+    $authService = AuthService::getInstance();
 
 
     if (preg_match('#^update-status/(\d+)$#', $request, $matches)) {
@@ -36,19 +44,29 @@ try{
             
         
             case 'create-task':
-                if($_SERVER['REQUEST_METHOD'] === 'GET'){
-                  $taskController->showAddTaskForm();
+               
+                if($authService->isUserAuthenticated()){
+                    if($_SERVER['REQUEST_METHOD'] === 'GET'){
+                        $taskController->showAddTaskForm();
+                      }
+                      elseIf($_SERVER['REQUEST_METHOD'] === 'POST'){
+                        Logger::info('trying to create task');
+                        $taskController->createTask('testing only');
+                      }
+                }else{
+                    echo 'user not authenticated';
                 }
-                elseIf($_SERVER['REQUEST_METHOD'] === 'POST'){
-                  Logger::info('trying to create task');
-                  $taskController->createTask('testing only');
-                }
+                    
                 break;
         
                 case 'tasks':
+                    if($authService->isUserAuthenticated()){
                    if($request === 'tasks'){
                    $taskController->showTasks();
                    }
+                }else{
+                    echo 'User not authenticated';
+                }
                     break;
         
                 case 'register-user':
@@ -76,10 +94,11 @@ try{
 
                 case 'contact': 
                     if($_SERVER['REQUEST_METHOD'] === 'GET') {
-                        View::render('/tasks/contact.php' , 'Contact');
+                         View::render('/tasks/contact.php' , 'Contact');
+                         unset($_SESSION['response']);
                         break;
                     } elseif($_SERVER['REQUEST_METHOD'] === 'POST'){
-                        Logger::info('post the contact form');
+                        $contactController->createContact();
                         break;
                     }  
                    

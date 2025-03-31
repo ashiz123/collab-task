@@ -7,7 +7,7 @@ namespace utils;
     public static function render($contentFile, $pageTitle, $data = []){
         extract($data);
         $contentFile = __DIR__ . '/../views/' . $contentFile;
-        require_once __DIR__ . '/../views/layout/master.php';
+        require_once __DIR__ . '/../views/layout/master.php'; // pageTitle is working here
     }
 
 

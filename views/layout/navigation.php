@@ -45,7 +45,7 @@
 
       <div ml-auto>
         <?php 
-        session_start();
+     
 
        if(isset($_SESSION['auth_user'])){
         echo '<a class="btn btn-secondary" href="/logout-user"> Logout</a>';

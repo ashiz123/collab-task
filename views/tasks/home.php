@@ -1,13 +1,13 @@
 <?php
 
+use services\AuthService;
+use utils\Logger;
 
-if(isset($_SESSION['auth_user'])){
-    $user = $_SESSION['auth_user'];
-    
-    echo $user['firstname']. ' is logged in';
+$authService = AuthService::getInstance();
+
+if($authService->isUserAuthenticated()){
+    echo $authService->getAuthUser()['firstname'] . ' logging in';
 }else{
-    echo 'not logged in';
+    echo 'user not logged in';
 }
-
-
 ?>

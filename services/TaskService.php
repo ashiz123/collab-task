@@ -7,16 +7,21 @@ use interfaces\TaskInterface;
 use models\Task;
 use utils\Logger;
 use utils\View;
+use services\AuthService;
 
 // service class is to use to access with database
 
 class TaskService implements TaskInterface{
+ private $authService;
 
-    
-
+    public function __construct()
+    {
+        $this->authService = AuthService::getInstance();
+       
+    }
 
     public function allTasks(){
-        return Task::orderBy('created_at', 'desc')->limit(10)->get();
+        return Task::where('user_id', $this->authService->getAuthId())->orderBy('created_at', 'desc')->limit(10)->get();
        
     }
 
@@ -24,6 +29,7 @@ class TaskService implements TaskInterface{
     public function storeTask(string $taskName, string $description){
         try{
             $newTask = new Task();
+            $newTask->user_id = $this->authService->getAuthId();
             $newTask->task = $taskName;
             $newTask->description = $description;
             if($newTask->save()) {

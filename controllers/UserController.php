@@ -20,7 +20,7 @@ class UserController {
     public function __construct()
     {
         $this->userService = new UserService();
-        $this->authService = new AuthService();
+        $this->authService = AuthService::getInstance();
     }
 
     public function register(){

@@ -47,6 +47,7 @@ class ComposerStaticInit4b3f46cc5aaf35ab7ec7e7f8a4a9721e
         ),
         'c' => 
         array (
+            'core\\' => 5,
             'controllers\\' => 12,
             'config\\' => 7,
         ),
@@ -127,6 +128,10 @@ class ComposerStaticInit4b3f46cc5aaf35ab7ec7e7f8a4a9721e
         'interfaces\\' => 
         array (
             0 => __DIR__ . '/../..' . '/interfaces',
+        ),
+        'core\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/core',
         ),
         'controllers\\' => 
         array (

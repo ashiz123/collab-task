@@ -12,6 +12,7 @@ return array(
     'models\\' => array($baseDir . '/models'),
     'migrations \\' => array($baseDir . '/migrations'),
     'interfaces\\' => array($baseDir . '/interfaces'),
+    'core\\' => array($baseDir . '/core'),
     'controllers\\' => array($baseDir . '/controllers'),
     'config\\' => array($baseDir . '/config'),
     'Symfony\\Polyfill\\Php83\\' => array($vendorDir . '/symfony/polyfill-php83'),

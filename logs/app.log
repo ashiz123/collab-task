@@ -228,3 +228,6 @@
 [2025-03-31T16:58:54.185763+00:00] app.INFO: Task 6 status updated to completed [] []
 [2025-03-31T16:58:55.459883+00:00] app.INFO: Task 6 status updated to pending [] []
 [2025-03-31T17:02:57.223530+00:00] app.INFO: trying to create task [] []
+[2025-04-01T11:09:53.706060+00:00] app.INFO: {"phone":"Phone number must be number"} [] []
+[2025-04-01T11:10:05.008189+00:00] app.INFO: [] [] []
+[2025-04-01T11:15:15.004130+00:00] app.INFO: Task 8 status updated to completed [] []

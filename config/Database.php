@@ -24,12 +24,12 @@ class Database{
             $this->capsule = new Capsule;
             $this->capsule->addConnection([
                 'driver'    => 'mysql',
-                'host'      => $_ENV['DB_HOST'],
-                'database'  => $_ENV['DB_DATABASE'],
-                'username'  => $_ENV['DB_USERNAME'],
-                'password'  => $_ENV['DB_PASSWORD'],
-                'charset'   => $_ENV['DB_CHARSET'],
-                'collation' => $_ENV['DB_COLLATION'],
+                'host'      => getenv('DB_HOST') ?: $_ENV['DB_HOST'],
+                'database'  => getenv('DB_DATABASE') ?: $_ENV['DB_DATABASE'],
+                'username'  => getenv('DB_USERNAME') ?: $_ENV['DB_USERNAME'],
+                'password'  =>getenv('DB_PASSWORD') ?: $_ENV['DB_PASSWORD'],
+                'charset'   => getenv('DB_CHARSET') ?: $_ENV['DB_CHARSET'],
+                'collation' => getenv('DB_COLLATION') ?: $_ENV['DB_COLLATION'],
                 'prefix'    => '',
             ], 'default' );
     

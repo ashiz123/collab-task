@@ -48,10 +48,10 @@
      
 
        if(isset($_SESSION['auth_user'])){
-        echo '<a class="btn btn-secondary" href="/logout-user"> Logout</a>';
+        echo '<a class="btn btn-secondary" href="./logout-user"> Logout</a>';
         }else
         {
-          echo '<a class="btn btn-primary" href="/login-user"> Login</a>';
+          echo '<a class="btn btn-primary" href="./login-user"> Login</a>';
         }
 
         ?>

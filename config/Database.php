@@ -3,7 +3,10 @@
 namespace config;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use PDO;
+use Dotenv\Dotenv;
 use utils\Logger;
+
+
 
 class Database{
 
@@ -13,15 +16,20 @@ class Database{
     private function __construct()
     {
         try {
+            $rootPath = dirname(__DIR__); 
+            $dotenv = Dotenv::createImmutable( $rootPath);
+            $dotenv->load();
+           
+
             $this->capsule = new Capsule;
             $this->capsule->addConnection([
                 'driver'    => 'mysql',
-                'host'      => '127.0.0.1',
-                'database'  => 'todo_app',
-                'username'  => 'root',
-                'password'  => 'yankee123',
-                'charset'   => 'utf8',
-                'collation' => 'utf8_unicode_ci',
+                'host'      => $_ENV['DB_HOST'],
+                'database'  => $_ENV['DB_DATABASE'],
+                'username'  => $_ENV['DB_USERNAME'],
+                'password'  => $_ENV['DB_PASSWORD'],
+                'charset'   => $_ENV['DB_CHARSET'],
+                'collation' => $_ENV['DB_COLLATION'],
                 'prefix'    => '',
             ], 'default' );
     

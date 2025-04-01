@@ -1,11 +1,11 @@
 <?php
 
 use config\Database;
-use utils\Logger;
+
 
 // Path to your migrations folder
 $migrationsPath = __DIR__ . '/migrations';
-Logger::info($migrationsPath);
+
 
 // Check if the folder exists
 if (!is_dir($migrationsPath)) {

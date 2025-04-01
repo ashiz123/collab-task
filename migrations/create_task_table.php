@@ -18,6 +18,8 @@ class CreateTasksTable{
         if(!$this->capsule::schema()->hasTable('tasks')){
             $this->capsule::schema()->create('tasks', function($table){
                 $table->increments('id');
+                $table->unsignedInteger('user_id');
+                $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
                 $table->string('task');
                 $table->string('description');
                 $table->enum('status', ['pending', 'completed'])->defualt('pending');
@@ -26,7 +28,7 @@ class CreateTasksTable{
             echo 'Task table created successfully using eleoquent. \n';
         }
         else{
-            echo 'Table already exists';
+            echo 'Task table already exists';
         }
     }
 

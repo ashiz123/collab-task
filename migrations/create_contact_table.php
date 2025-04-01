@@ -35,7 +35,7 @@ class CreateContactTable{
 
 
 
-    //it uses Capsule::schema()
+   
     public function down(){
         try{
             $capsule = Database::getInstance()->getCapsule();

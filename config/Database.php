@@ -16,9 +16,14 @@ class Database{
     private function __construct()
     {
         try {
-            $rootPath = dirname(__DIR__); 
-            $dotenv = Dotenv::createImmutable( $rootPath);
-            $dotenv->load();
+            $rootPath = dirname(__DIR__);
+
+            // Load the .env file only if it exists
+            $envFilePath = $rootPath . '/.env';
+            if (file_exists($envFilePath)) {
+                $dotenv = Dotenv::createImmutable($rootPath);
+                $dotenv->load();
+            }
            
 
             $this->capsule = new Capsule;

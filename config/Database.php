@@ -29,10 +29,10 @@ class Database{
             $this->capsule = new Capsule;
             $this->capsule->addConnection([
                 'driver'    => 'mysql',
-                'host'      => getenv('DB_HOST') ,
-                'database'  => getenv('DB_DATABASE') ,
-                'username'  => getenv('DB_USERNAME'),
-                'password'  => getenv('DB_PASSWORD') ,
+                'host'      => getenv('DB_HOST') ?: $_ENV['DB_HOST'],
+                'database'  => getenv('DB_DATABASE') ?: $_ENV['DB_DATABASE'],
+                'username'  => getenv('DB_USERNAME') ?: $_ENV['DB_USERNAME'],
+                'password'  =>getenv('DB_PASSWORD') ?: $_ENV['DB_PASSWORD'],
                 'charset'   => 'utf8' ,
                 'collation' => 'utf8_unicode_ci',
                 'prefix'    => '',

@@ -10,16 +10,16 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item <?php echo ($current_page === 'home')? 'active' : ''; ?>">
-        <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="./home">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item  <?php echo($current_page === 'create-task') ? 'active' : ''; ?> ">
-        <a class="nav-link" href="/create-task">Create Task</a>
+        <a class="nav-link" href="./create-task">Create Task</a>
       </li>
       <li class="nav-item <?php echo($current_page === 'tasks') ? 'active' : '';  ?>">
-        <a class="nav-link" href="/tasks">Tasks</a>
+        <a class="nav-link" href="./tasks">Tasks</a>
       </li>
       <li class="nav-item  <?php echo($current_page === 'contact') ? 'active' : '';  ?>">
-        <a class="nav-link" href="/contact">Contact</a>
+        <a class="nav-link" href=".g/contact">Contact</a>
       </li>
       <!-- <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

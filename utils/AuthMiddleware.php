@@ -17,7 +17,7 @@ class AuthMiddleware{
             return $next();
         }else{
             http_response_code(403);
-            $_SESSION['response'] = "You must login first";
+            $_SESSION['response'] = "You must login to create and view tasks";
             header('Location: /login-user' );
             exit;
         }

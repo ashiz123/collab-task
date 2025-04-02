@@ -21,22 +21,17 @@
       <li class="nav-item  <?php echo($current_page === 'contact') ? 'active' : '';  ?>">
         <a class="nav-link" href="./contact">Contact</a>
       </li>
+</div>
      
 
       <div ml-auto>
-        <?php 
-     
-
-       if(isset($_SESSION['auth_user'])){
+        <?php if(isset($_SESSION['auth_user'])){ 
         echo '<a class="btn btn-secondary" href="./logout-user"> Logout</a>';
         }else
         {
           echo '<a class="btn btn-primary" href="./login-user"> Login</a>';
         }
-
         ?>
-     
-      </div>
-  </div>
+       </div>
   </div>
 </nav> 

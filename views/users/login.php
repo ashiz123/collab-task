@@ -1,4 +1,13 @@
 <div class="container">
+
+<?php if(isset($_SESSION['response'])) : ?>
+  <div class="alert alert-primary" role="alert">
+     <p class="text-center pt-3"><?= htmlspecialchars($_SESSION['response']) ?></p> 
+  </div>
+
+<?php unset($_SESSION['response']); endif ?>
+
+
     <div class="register-container">
       <h2>Login User</h2>
       <form action = "login-user" method="POST">

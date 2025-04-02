@@ -273,3 +273,4 @@
 [2025-04-02T08:02:25.520041+00:00] app.INFO: Task 7 status updated to completed [] []
 [2025-04-02T08:02:26.160392+00:00] app.INFO: Task 7 status updated to pending [] []
 [2025-04-02T08:02:27.133230+00:00] app.INFO: Task 8 status updated to pending [] []
+[2025-04-02T09:14:15.560235+00:00] app.INFO: {"phone":"Phone number must be number"} [] []

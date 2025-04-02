@@ -17,7 +17,8 @@ class AuthMiddleware{
             return $next();
         }else{
             http_response_code(403);
-            echo 'Access Denied: Authentication required';
+            $_SESSION['response'] = "You must login first";
+            header('Location: /login-user' );
             exit;
         }
     }

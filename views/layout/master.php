@@ -8,6 +8,7 @@
     <title><?= htmlspecialchars($pageTitle) ?></title>
     <!-- Bootstrap CSS (CDN) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel= "stylesheet" href= "/public/custom.css">
 </head>
 <body>
 

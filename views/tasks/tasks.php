@@ -11,8 +11,17 @@
        <?php foreach($tasks as $task): ?>
       <li class="list-group-item d-flex justify-content-between align-items-center">
         <div>
-          <h5 class="mb-1"><?= htmlspecialchars($task['task']); ?></h5>
-          <p class="mb-1 text-muted"><?= htmlspecialchars($task['description'])  ?></p>
+          <?php if(isset($task)  && $task['status'] === 'completed') : ?>
+            <h5 class="mb-1 text-middle-truncate"><?= htmlspecialchars($task['task']); ?></h5>
+            <p class="text-middle-truncate">
+            <?= htmlspecialchars($task['description']); ?>
+            </p>
+            <?php else: ?>
+            <h5 class="mb-1"><?= htmlspecialchars($task['task']); ?></h5>
+            <p class="mb-1 text-muted"><?= htmlspecialchars($task['description'])  ?></p>
+          <?php endif ?>
+
+
           <span class="badge bg-primary">In Progress</span>
           <span class="badge bg-warning">High Priority</span>
         </div>

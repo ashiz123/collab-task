@@ -21,8 +21,9 @@
             <p class="mb-1 text-muted"><?= htmlspecialchars($task['description'])  ?></p>
           <?php endif ?>
 
-
+          <?php if(isset($task)  && $task['status'] !== 'completed') : ?>
           <span class="badge bg-primary">In Progress</span>
+          <?php endif ?>
           <span class="badge bg-warning">High Priority</span>
         </div>
         <form action="/update-status/<?php echo $task->id; ?>" method="POST" class="m-0">

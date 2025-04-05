@@ -1,14 +1,15 @@
 <div class="container">
 
-<?php if(isset($_SESSION['response'])) : ?>
-  <div class="alert alert-primary" role="alert">
-     <p class="text-center pt-3"><?= htmlspecialchars($_SESSION['response']) ?></p> 
+
+<?php if(isset($_SESSION['login_error'])) : ?>
+  <div class="alert alert-danger" role="alert">
+     <p class="text-center pt-3"><?= htmlspecialchars($_SESSION['login_error']) ?></p> 
   </div>
 
-<?php unset($_SESSION['response']); endif ?>
+  <?php unset($_SESSION['login_error']); endif ?>
 
 
-    <div class="register-container">
+<div class="register-container">
       <h2>Login User</h2>
       <form action = "login-user" method="POST">
        

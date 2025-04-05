@@ -40,6 +40,7 @@ class SeedCommand extends Command
      * Create a new database seed command instance.
      *
      * @param  \Illuminate\Database\ConnectionResolverInterface  $resolver
+     * @return void
      */
     public function __construct(Resolver $resolver)
     {
@@ -95,8 +96,8 @@ class SeedCommand extends Command
         }
 
         return $this->laravel->make($class)
-            ->setContainer($this->laravel)
-            ->setCommand($this);
+                        ->setContainer($this->laravel)
+                        ->setCommand($this);
     }
 
     /**

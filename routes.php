@@ -52,6 +52,14 @@ try{
     $router->post('contact', [$contactController , 'createContact']);
 
 
+    $router->get('verify-otp', function() {
+        View::render('/users/verifyOtp.php', 'Verify User');
+        // unset($_SESSION['register_user']);
+    });
+    $router->post('verify-otp', [$userController, 'verifyOtp']);
+    $router->get('resend-otp', [$userController, 'resendOtp']);
+
+
     //Status Routes
     $router->post('update-status/{id}', fn($id) => $authMiddleware->handle(fn() => $taskController->updateStatus($id)));
 

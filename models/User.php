@@ -6,7 +6,7 @@ use utils\Logger;
 
 class User extends Model{
    protected $table = 'users';
-   protected $fillable = ['email', 'firstname', 'lastname', 'password'];
+   protected $fillable = ['email', 'firstname', 'lastname', 'password', 'is_verified', 'otp', 'otp_expires'];
    protected $hidden = ['password'];
    public $timestamps = true;
 
@@ -23,12 +23,12 @@ class User extends Model{
    public function getPasswordAttribute($value){
       return $value;
    }
+
+
+   public function verified(){
+      return $this->is_verified === 1;
+   }
    
-
-
-  
-
-
 
    public static function validateRegisterUser($email, $firstname, $lastname, $password) : Array{
       $errors = [];
@@ -73,16 +73,18 @@ class User extends Model{
 
 
    public static function validateLoginUser($email, $password) : Array {
-      $errors = [];
 
-      $existingUser = self::where('email', $email)->first();
-      if(empty($email)){
-         $error[] = "Email required";
-      }
+      var_dump($email);
+      $errors = [];
+     
+     
+      if (empty(trim($email))) {
+         $errors[] = "Email is required";  
+     } 
 
 
       if(empty($password)){
-         $error[] = "Password required";
+         $errors[] = "Password required";
       }
 
       return $errors;

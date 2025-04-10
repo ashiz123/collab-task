@@ -7,6 +7,7 @@
 require_once __DIR__ . '/../config/database.php';
 use illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Schema\Blueprint;
+require_once __DIR__ . '/../vendor/autoload.php';
 
 try{
     Capsule::schema()->table('tasks', function(Blueprint $table) {

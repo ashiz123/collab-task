@@ -10,7 +10,7 @@ use Illuminate\Database\Schema\Blueprint;
 
 try{
     Capsule::schema()->table('tasks', function(Blueprint $table) {
-        $table->string('description')->nullable()->after('task');
+        $table->timestamp('deleted_at')->nullable();
         // $table->unsignedInteger('user_id')->nullable()->after('id');
         // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
     });

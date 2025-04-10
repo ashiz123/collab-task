@@ -23,7 +23,7 @@ class CreateTasksTable{
                 $table->string('task');
                 $table->string('description');
                 $table->enum('status', ['pending', 'completed'])->defualt('pending');
-                $table->enum('deleted_at')->nullable();
+                $table->timestamp('deleted_at')->nullable();
                 $table->enum('priority', ['high' , 'medium', 'low'])->nullable();
                 $table->timestamps();
             });

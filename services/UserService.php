@@ -171,7 +171,7 @@ class UserService implements UserInterface{
 
 
         public function getTasksByUser(){
-            if($_SESSION['auth_user']){
+            if (isset($_SESSION['auth_user']) && $_SESSION['auth_user']){
                 $authId = $_SESSION['auth_user']['id'];
                 $user = User::find($authId);
                 $assignTask = $user->assignedTasks()->with('createdUser')->get();

@@ -39,8 +39,13 @@ class AssignTaskController {
     }
 
     public function viewAssignTask(){
-       $assignTask = $this->userService->getTasksByUser();
-       View::render('/tasks/assigned_tasks.php', 'Assigned task', ['tasks' => $assignTask]);
+        if($this->userService->getTasksByUser()){
+            $assignTask = $this->userService->getTasksByUser();
+            View::render('/tasks/assigned_tasks.php', 'Assigned task', ['tasks' => $assignTask]);
+        }else{
+            echo 'user not logged in';
+        }
+       
     }
 
 

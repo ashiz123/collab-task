@@ -32,7 +32,7 @@ class Database{
                 'host'      => getenv('DB_HOST') ?: $_ENV['DB_HOST'],
                 'database'  => getenv('DB_DATABASE') ?: $_ENV['DB_DATABASE'],
                 'username'  => getenv('DB_USERNAME') ?: $_ENV['DB_USERNAME'],
-                'password'  =>getenv('DB_PASSWORD') ?: $_ENV['DB_PASSWORD'],
+                'password'  => getenv('DB_PASSWORD') ?: $_ENV['DB_PASSWORD'],
                 'charset'   => 'utf8' ,
                 'collation' => 'utf8_unicode_ci',
                 'prefix'    => '',

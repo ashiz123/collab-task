@@ -24,6 +24,7 @@ class smtpMailer{
     $this->mail->Password = 'e1ef0f2ed7b854'; 
     $this->mail->SMTPSecure = 'tls'; 
     $this->mail->Port = 587;
+    
  }
 
 

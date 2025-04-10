@@ -164,6 +164,22 @@ class UserService implements UserInterface{
 
 
 
+        public function getAllUsers(){
+            $users = User::all();
+            return $users;
+        }
+
+
+        public function getTasksByUser(){
+            $authId = $_SESSION['auth_user']['id'];
+            $user = User::find($authId);
+            $assignTask = $user->assignedTasks()->with('createdUser')->get();
+            return $assignTask;
+
+        }
+
+
+
     
    
 

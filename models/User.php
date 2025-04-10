@@ -2,7 +2,9 @@
 
 namespace models;
 use Illuminate\Database\Eloquent\Model;
+use LDAP\Result;
 use utils\Logger;
+use models\Task;
 
 class User extends Model{
    protected $table = 'users';
@@ -17,8 +19,7 @@ class User extends Model{
 
    public function checkPassword($password): bool{
       return password_verify($password, $this->password);
-      
-    }
+   }
 
    public function getPasswordAttribute($value){
       return $value;
@@ -27,6 +28,11 @@ class User extends Model{
 
    public function verified(){
       return $this->is_verified === 1;
+   }
+
+   public static function getUserNameById($id){
+      $user = self::find($id);
+      return $user? $user->firstname . ' ' . $user->lastname : null;
    }
    
 
@@ -88,6 +94,16 @@ class User extends Model{
       }
 
       return $errors;
+   }
+
+
+   public function assignedTasks(){
+      return $this->belongsToMany(Task::class, 'task_assignment')->withPivot('deadline', 'role_name', 'status', 'priority');
+   }
+
+
+   public function tasks(){
+      return $this->hasMany(Task::class);
    }
 
   

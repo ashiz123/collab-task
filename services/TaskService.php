@@ -49,6 +49,21 @@ class TaskService implements TaskInterface{
         
     }
 
+    public function getTaskById($id){
+        if($id){
+            $task = Task::findOrFail($id);
+            return $task;
+        }   
+        return null;
+    }
+
+
+    public function getAllUsersByTask($taskId){
+        $task = Task::find($taskId);
+        $users = $task->assignedUsers()->get();
+        return $users;
+    }
+
 
     public function updateTask($id){
 

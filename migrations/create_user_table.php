@@ -17,6 +17,9 @@ class CreateUserTable {
                 $table->string('firstname');
                 $table->string('lastname');
                 $table->string('password');
+                $table->string('otp', 10)->nullable();
+                $table->timestamp('otp_expires')->nullable();
+                $table->tinyInteger('is_verified')->default(0);
                 $table->timestamps();
                 
             });

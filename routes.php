@@ -5,6 +5,7 @@ session_start();
 
 use core\Router;
 use config\Database;
+use controllers\AssignTaskController;
 use utils\View;
 use utils\Logger;
 use services\AuthService;
@@ -19,6 +20,7 @@ try{
     $taskController = new TaskController();
     $userController = new UserController();
     $contactController = new ContactController();
+    $assignTaskController = new AssignTaskController();
     $authService = AuthService::getInstance();
     $authMiddleware = new AuthMiddleware($authService);
     $router = new Router();
@@ -62,8 +64,11 @@ try{
 
     //Status Routes
     $router->post('update-status/{id}', fn($id) => $authMiddleware->handle(fn() => $taskController->updateStatus($id)));
+    $router->get('task/{id}' , fn($id) => [$taskController->showTask($id)]);
 
-
+    
+    $router->post('assign-task/{id}', fn($id) => [$assignTaskController->assignTask($id)]);
+    $router->get('view-assign-task', [$assignTaskController, 'viewAssignTask']);
 
     $router->matchRoute();
 

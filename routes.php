@@ -68,7 +68,7 @@ try{
 
     
     $router->post('assign-task/{id}', fn($id) => [$assignTaskController->assignTask($id)]);
-    $router->get('view-assign-task', [$assignTaskController, 'viewAssignTask']);
+    $router->get('view-assign-task', fn() => $authMiddleware->handle(fn() => $assignTaskController->viewAssignTask()));
 
     $router->matchRoute();
 

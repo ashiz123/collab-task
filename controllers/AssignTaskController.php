@@ -40,7 +40,7 @@ class AssignTaskController {
 
     public function viewAssignTask(){
        $assignTask = $this->userService->getTasksByUser();
-       View::render('/tasks/assigned_tasks.php', 'Assigned task', ['tasks' => $assignTask, '']);
+       View::render('/tasks/assigned_tasks.php', 'Assigned task', ['tasks' => $assignTask]);
     }
 
 

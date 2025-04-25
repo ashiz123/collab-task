@@ -98,12 +98,17 @@ class User extends Model{
 
 
    public function assignedTasks(){
-      return $this->belongsToMany(Task::class, 'task_assignment')->withPivot('deadline', 'role_name', 'status', 'priority');
+      return $this->belongsToMany(Task::class, 'task_assignment')->withPivot('id', 'deadline', 'role_name', 'status', 'priority');
    }
 
 
    public function tasks(){
       return $this->hasMany(Task::class);
+   }
+
+    //user notifications
+   public function notifications(){
+      return $this->hasMany(Notification::class);
    }
 
   

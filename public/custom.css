@@ -1,4 +1,19 @@
-.text-middle-truncate {
-   text-decoration: line-through;
+
+.task-container {
+   background: white;
+   padding: 40px;
+   border-radius: 16px;
+   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+   width: 100%;
+   max-width: 600px;
+   margin: 60px auto 20px; /* top, horizontal (auto), bottom */
+   padding: 40px;
+ }
+
+ .custom-checkbox-lg input[type="checkbox"] {
+  transform: scale(1.5); /* Adjust size here */
+  margin-right: 8px;
 }
 
+
+ 

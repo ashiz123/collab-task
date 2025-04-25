@@ -27,7 +27,7 @@
           <span class="badge bg-warning">High Priority</span>
         </div>
         <div class="m-0">
-        <form action="/update-status/<?php echo $task->id; ?>" method="POST" >
+        <form action="/task/update-status/<?php echo $task->id; ?>" method="POST" >
             <button type="submit" class="btn btn-sm <?php echo $task->status === 'completed' ? 'btn-success' : 'btn-secondary'; ?>">
                 <?php echo $task->status === 'pending' ? 'Complete' : 'Undo'; ?>
             </button>

@@ -5,8 +5,9 @@ namespace interfaces;
 interface TaskAssignInterface{
 
 
-    public function createTaskToUser($user, $id);
+    public function assignTaskToUser($user, $id);
     public function getAssignUsers($taskId);
+    public function changeStatusOfAssignTask($taskId, $status);
 
 }
 

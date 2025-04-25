@@ -64,6 +64,10 @@ class TaskService implements TaskInterface{
         return $users;
     }
 
+    public function getUserCreatedTask(){
+        
+    }
+
 
     public function updateTask($id){
 

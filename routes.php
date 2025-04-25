@@ -12,13 +12,15 @@ use services\AuthService;
 use controllers\TaskController;
 use controllers\UserController;
 use controllers\ContactController;
-use utils\AuthMiddleware;
+use controllers\NotificationController;
+use middlewares\AuthMiddleware;
 
 Database::getInstance();
 
 try{
     $taskController = new TaskController();
     $userController = new UserController();
+    $notificationController = new NotificationController();
     $contactController = new ContactController();
     $assignTaskController = new AssignTaskController();
     $authService = AuthService::getInstance();
@@ -63,17 +65,22 @@ try{
 
 
     //Status Routes
-    $router->post('update-status/{id}', fn($id) => $authMiddleware->handle(fn() => $taskController->updateStatus($id)));
+    $router->post('task/update-status/{id}', fn($id) => $authMiddleware->handle(fn() => $taskController->updateStatus($id)));
     $router->get('task/{id}' , fn($id) => [$taskController->showTask($id)]);
 
     
     $router->post('assign-task/{id}', fn($id) => [$assignTaskController->assignTask($id)]);
     $router->get('view-assign-task', fn() => $authMiddleware->handle(fn() => $assignTaskController->viewAssignTask()));
-
+    $router->post('assign-task/update-status/{assignId}', fn($assignId) => [$assignTaskController->changeStatus($assignId)]);
+    
+    
+    $router->get('notifications', fn() =>  [$notificationController->userNotification()]);
+    $router->post('notifications/{notificationId}', fn($notificationId)=> [$notificationController->notificationReadStatus($notificationId)]);
+    
     $router->matchRoute();
 
     
-}
+} 
 
     
 catch(Exception $e){

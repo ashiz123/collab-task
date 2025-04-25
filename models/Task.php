@@ -31,6 +31,20 @@ class Task extends Model {
        return $user->firstname . ' '. $user->lastname;
     }
 
+   
+
+    public function getPriorityBadgeClass(){
+        if($this->pivot->priority === "low"){
+            return "btn-primary";
+        }elseif($this->pivot->priority === "medium"){
+            return "btn-warning";
+        }else{
+            return "btn-danger";
+        }
+    }
+
+
+
 
    
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace utils;
+namespace middlewares;
 use services\AuthService;
 
 class AuthMiddleware{

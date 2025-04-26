@@ -3,26 +3,40 @@
 namespace controllers;
 use Exception;
 use models\Task;
+use services\TaskAssignService;
 use utils\View;
 use utils\Logger;
 use services\TaskService;
+use services\UserService;
+
 
 // controller is use to validate and view or response. It works between service and route. 
 
 class TaskController{
-    private $taskModel;
     protected $taskService;
+    protected $userService;
+    protected $taskAssignService;
 
 
     public function __construct()
     {
-        $this->taskModel = new Task();  
         $this->taskService = new TaskService();
+        $this->userService = new UserService();
+        $this->taskAssignService = new TaskAssignService();
     }
 
 
     public function showAddTaskForm(){
         View::render('tasks/add_task.php', 'task');
+    }
+
+
+    public function showTask($id){
+        $task = $this->taskService->getTaskById($id);
+        $userOptions = $this->userService->getAllUsers();
+        $assignUsers = $this->taskService->getAllUsersByTask($id);
+        Logger::info('here' .  $assignUsers);
+        View::render('tasks/task.php', 'task', ['task' => $task, 'allUsers' => $userOptions, 'assignUsers' => $assignUsers ]);
     }
 
 
@@ -58,7 +72,8 @@ class TaskController{
             if($this->taskService->storeTask($taskName, $description))
             {
                 $tasks = $this->taskService->allTasks();
-                View::render('tasks/tasks.php', 'Tasks', ['tasks' => $tasks]);
+                header('Location: /tasks');
+                exit();
                 return;
             }else{
                 View::render('tasks/add_task.php', 'Add Task', ['error' => 'Failed to save task']);

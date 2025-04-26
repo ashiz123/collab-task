@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'php/todo-app',
-        'pretty_version' => 'dev-main',
-        'version' => 'dev-main',
-        'reference' => '5bdbcf8a58ce7e8c2818332dd093794b9c5e0ede',
+        'pretty_version' => '1.0.0',
+        'version' => '1.0.0.0',
+        'reference' => null,
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -200,9 +200,9 @@
             'dev_requirement' => true,
         ),
         'php/todo-app' => array(
-            'pretty_version' => 'dev-main',
-            'version' => 'dev-main',
-            'reference' => '5bdbcf8a58ce7e8c2818332dd093794b9c5e0ede',
+            'pretty_version' => '1.0.0',
+            'version' => '1.0.0.0',
+            'reference' => null,
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -555,6 +555,15 @@
             'install_path' => __DIR__ . '/../theseer/tokenizer',
             'aliases' => array(),
             'dev_requirement' => true,
+        ),
+        'twig/twig' => array(
+            'pretty_version' => 'v3.20.0',
+            'version' => '3.20.0.0',
+            'reference' => '3468920399451a384bef53cf7996965f7cd40183',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../twig/twig',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'vlucas/phpdotenv' => array(
             'pretty_version' => 'v5.6.1',

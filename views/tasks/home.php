@@ -1,6 +1,5 @@
 
 
-
 <div class="container mt-5">
         <div class="jumbotron text-center">
             <h1 class="display-4">Stay Organized, Stay Productive!</h1>

@@ -26,11 +26,21 @@
           <?php endif ?>
           <span class="badge bg-warning">High Priority</span>
         </div>
-        <form action="/update-status/<?php echo $task->id; ?>" method="POST" class="m-0">
+        <div class="m-0">
+        <form action="/task/update-status/<?php echo $task->id; ?>" method="POST" >
             <button type="submit" class="btn btn-sm <?php echo $task->status === 'completed' ? 'btn-success' : 'btn-secondary'; ?>">
                 <?php echo $task->status === 'pending' ? 'Complete' : 'Undo'; ?>
             </button>
+            
         </form>
+        <!-- <form action = "/task/ ?>" class="mt-2" method="GET">
+           <button type="submit" class="btn btn-sm btn-primary" >
+                View Task
+            </button>
+        </form> -->
+        <a href="/task/<?php echo $task->id ?>" class="btn btn-sm btn-primary mt-2">View Task</a>
+        </div>
+       
       </li>
 
     <?php endforeach;   else: ?>

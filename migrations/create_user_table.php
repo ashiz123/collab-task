@@ -20,6 +20,10 @@ class CreateUserTable {
                 $table->string('otp', 10)->nullable();
                 $table->timestamp('otp_expires')->nullable();
                 $table->tinyInteger('is_verified')->default(0);
+
+                // $table->unsignedInteger('role_id');
+                // $table->foreign('role_id')->references('id')->on('role')->onDelete('cascade');
+
                 $table->timestamps();
                 
             });

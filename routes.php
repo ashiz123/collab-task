@@ -5,6 +5,7 @@ session_start();
 
 use core\Router;
 use config\Database;
+use controllers\AdminController;
 use controllers\AssignTaskController;
 use utils\View;
 use utils\Logger;
@@ -14,6 +15,12 @@ use controllers\UserController;
 use controllers\ContactController;
 use controllers\NotificationController;
 use middlewares\AuthMiddleware;
+use middlewares\RoleMiddleware;
+use controllers\ProfileController;
+use controllers\ProfileInfoController;
+use controllers\SkillController;
+use services\SkillService;
+use services\RoleService;
 
 Database::getInstance();
 
@@ -25,8 +32,14 @@ try{
     $assignTaskController = new AssignTaskController();
     $authService = AuthService::getInstance();
     $authMiddleware = new AuthMiddleware($authService);
-    $router = new Router();
-
+    $roleMiddleware = new RoleMiddleware($authService);
+    $router = new Router(); 
+    $profileController = new ProfileController();
+    $profileInfoController = new ProfileInfoController();
+    $skillService = new SkillService();
+    $skillController = new SkillController($skillService);
+    $roleService = new RoleService();
+    $adminController = new AdminController($roleService);
 
     //Index Routes
     $router->get('', fn() => View::render('tasks/home.php', 'Home'));
@@ -55,7 +68,25 @@ try{
     });
     $router->post('contact', [$contactController , 'createContact']);
 
+    //Profile Info Routes
+  
+    $router->get('create-profile-info', [$profileInfoController, 'createProfileInfo']);
+    $router->post('save-profile-info', [$profileInfoController, 'saveProfileInfo']);
 
+    //Skill Routes
+    $router->group('skills', function($router) use ($skillController){
+        $router->get('skills', [$skillController, 'index']);
+        $router->get('create-skill', [$skillController, 'create']);
+        $router->post('store-skill', [$skillController, 'store']);
+        $router->get('skill-list', [$skillController, 'skillList']);
+    });
+
+
+    //Profile Routes
+    $router->get('profile', [$profileController, 'profilePage']);
+   
+
+ 
     $router->get('verify-otp', function() {
         View::render('/users/verifyOtp.php', 'Verify User');
         // unset($_SESSION['register_user']);
@@ -68,14 +99,20 @@ try{
     $router->post('task/update-status/{id}', fn($id) => $authMiddleware->handle(fn() => $taskController->updateStatus($id)));
     $router->get('task/{id}' , fn($id) => [$taskController->showTask($id)]);
 
-    
+    //task assign routes
     $router->post('assign-task/{id}', fn($id) => [$assignTaskController->assignTask($id)]);
     $router->get('view-assign-task', fn() => $authMiddleware->handle(fn() => $assignTaskController->viewAssignTask()));
     $router->post('assign-task/update-status/{assignId}', fn($assignId) => [$assignTaskController->changeStatus($assignId)]);
     
-    
+    //notifications routes
     $router->get('notifications', fn() =>  [$notificationController->userNotification()]);
     $router->post('notifications/{notificationId}', fn($notificationId)=> [$notificationController->notificationReadStatus($notificationId)]);
+    $router->get('notifications/unread-count',[$notificationController, 'getUnreadNotificationCount']);
+
+    //admin routes
+    $router->get('admin/roles', fn() => $roleMiddleware->handle(fn()=> $adminController->showAllRoles()));
+    $router->post('admin/roles', fn() => $roleMiddleware->handle(fn() => $adminController->storeRole()));
+    // $router->get('admin/roles', fn() => [$adminController->showAllRoles()]);
     
     $router->matchRoute();
 

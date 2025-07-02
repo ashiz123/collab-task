@@ -2,9 +2,11 @@
 
 namespace models;
 use Illuminate\Database\Eloquent\Model;
-use LDAP\Result;
-use utils\Logger;
 use models\Task;
+use models\ProfileInfo;
+use models\PredefinedSkill;
+use models\Role;
+
 
 class User extends Model{
    protected $table = 'users';
@@ -25,10 +27,41 @@ class User extends Model{
       return $value;
    }
 
+   public function getFullNameAttribute(){
+      return $this->firstname . ' ' . $this->lastname;
+   }
+
+   public function predefinedSkills(){
+      return $this->belongsToMany(PredefinedSkill::class, 'user_skills', 'user_id', 'skill_id');
+      
+   }
+
+   public function roles(){
+      return $this->belongsToMany(Role::class, 'user_role' , 'user_id', 'role_id');
+   }
+
+ 
+   public function getRoleAttribute(){
+      return $this->roles()->first();
+   }
+
+  
+   public function profileInfo(){
+      return $this->hasOne(ProfileInfo::class);
+   }
+
+   public function skills(){
+      return $this->hasMany(Skill::class);
+   }
+
 
    public function verified(){
       return $this->is_verified === 1;
    }
+
+
+
+   
 
    public static function getUserNameById($id){
       $user = self::find($id);
@@ -110,6 +143,12 @@ class User extends Model{
    public function notifications(){
       return $this->hasMany(Notification::class);
    }
+
+   public function unreadNotificationCount() {
+      return $this->notifications()
+          ->whereNull('read_at')
+          ->count();
+  }
 
   
 

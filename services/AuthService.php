@@ -2,6 +2,7 @@
 
 namespace services;
 use interfaces\AuthInterface;
+use models\User;
 use utils\Logger;
 
 class AuthService implements AuthInterface{
@@ -45,6 +46,28 @@ class AuthService implements AuthInterface{
             return $_SESSION['auth_user']['id'];
         }
         return null;
+    }
+
+    public function getAuthenticateUser() : ?User{
+        $user = User::find($_SESSION['auth_user']['id']);
+        return $user;
+        
+    }
+
+     public function getAuthUserRole(){
+       try{
+        
+        $user = $this->getAuthenticateUser();
+        
+        if(!$user){
+             return 'user not found';
+        }
+        return $user->role;
+       
+       }
+       catch(\Exception $e){
+        return 'Error occured:'. $e->getMessage();
+       }
     }
     
 

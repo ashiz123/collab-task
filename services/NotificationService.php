@@ -5,6 +5,7 @@ namespace services;
 use interfaces\NotificationChannelInterface;
 use models\Notification;
 use utils\Logger;
+use models\User;
 use interfaces\NotificationInterface;
 use services\DatabaseChannelService;
 
@@ -20,11 +21,15 @@ class NotificationService implements NotificationInterface {
 
     }
 
-    public static function send($userId, $message, $type='info', $channel = 'database'){
+
+
+    public static function send($userId, $assignId, $title, $message, $type='info', $channel = 'database'){
         $handler = self::getChannelHandler($channel);
-        $handler->send($userId, $message, $type );
+        $handler->send($userId, $assignId, $title, $message, $type );
         return true;
     }
+
+
 
 
     public static function read($notificationId, $readAt){
@@ -48,6 +53,17 @@ class NotificationService implements NotificationInterface {
 
         return true;
     }
+
+
+
+    public function countUnreadNotification(){
+        if(isset($_SESSION['auth_user'])){
+            $user = User::find($_SESSION['auth_user']['id']);
+            return $user->unreadNotificationCount();
+         }else{
+            throw new \Exception('User not available');
+         }
+     }
 
 
     public static function unread($notificationId){

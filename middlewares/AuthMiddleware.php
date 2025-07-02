@@ -1,14 +1,14 @@
 <?php
 
 namespace middlewares;
-use services\AuthService;
+
 
 class AuthMiddleware{
     private $authService;
 
-    public function __construct()
+    public function __construct($authService)
     {
-        $this->authService = AuthService::getInstance();
+        $this->authService =$authService;
     }
 
     public function handle(callable $next)

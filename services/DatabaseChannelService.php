@@ -7,11 +7,13 @@ use utils\Logger;
 
 class DatabaseChannelService implements NotificationChannelInterface{
 
-    public function send($userId, $message, $type){
+    public function send($userId, $assignId, $title , $message, $type){
         $notification =  Notification::create([
             'user_id' => $userId,
-            'type' => $type,
+            'assign_id' => $assignId,
+            'title' => $title,
             'message' => $message,
+            'type' => $type,
             'read_at' => null
         ]);
 

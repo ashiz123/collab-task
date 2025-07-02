@@ -21,7 +21,7 @@ class NotificationController {
 
     public function userNotification (){
         $user = User::find($this->authService->getAuthId());
-        View::render('/users/notifications.php', 'Notifications', ['notifications' => $user->notifications ]);
+        View::render('/notifications/notifications.php', 'Notifications', ['notifications' => $user->notifications ]);
     }
 
     public function notificationReadStatus($noficationId){
@@ -48,10 +48,23 @@ class NotificationController {
                 'message' => $e->getMessage()
             ], 400);
         }
+    }
 
-      
-
+    public function getUnreadNotificationCount(){
        
+        ob_clean(); 
+        header('Content-Type: application/json');
+       
+        try{
+            $count = $this->notificationService->countUnreadNotification();
+            echo json_encode(['count' => $count]);
+        }
+        catch(\Exception $e){
+            echo json_encode([
+                'success'=> false,
+                'message' => 'cannot fetch notifications'. $e->getMessage()
+            ]);
+        }
     }
 
 }

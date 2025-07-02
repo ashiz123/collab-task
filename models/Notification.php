@@ -2,14 +2,18 @@
 
 namespace models;
 use Illuminate\Database\Eloquent\Model;
-
+use models\User;
 
 class Notification extends Model{
 
     protected $table = 'notifications';
     protected $primaryKey = 'id';
-    protected $fillable = ['user_id','type', 'message',  'read_at'];
+    protected $fillable = ['user_id', 'assign_id', 'type','title', 'message',  'read_at'];
     protected $dates = ['read_at'];
+
+    public function notificationToUser(){
+        return $this->hasOne(User::class);
+     }
 
 
 

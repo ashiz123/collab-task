@@ -9,18 +9,28 @@ use utils\View;
 class Router{
 
     private array $routes = [];
+    private string $currentPrefix = '';
 
     public function get(string $path, callable $handler){
-      $this->routes['GET'][$path] = $handler;
-    }
+      $fullPath = trim($this->currentPrefix . '/' . trim($path, '/'), '/');
+      $this->routes['GET'][$fullPath] = $handler;
+  }
+  
 
-    public function post(string $path, callable $handler){
-      $this->routes['POST'][$path] = $handler;  
-    }
+  //$handler is something that we are calling from another function.
+  public function post(string $path, callable $handler){
+      $fullPath = trim($this->currentPrefix . '/' . trim($path, '/'), '/');
+      $this->routes['POST'][$fullPath] = $handler;
+  }
 
-    public function update(string $path, callable $handler){
+  public function group(string $prefix, callable $callback){
+    $previousPrefix = $this->currentPrefix;
+    $this->currentPrefix = rtrim($previousPrefix . '/' . trim($prefix, '/'), '/');
+    $callback($this); // Pass the router to the closure
+    $this->currentPrefix = $previousPrefix; // Reset prefix after group
+ }
 
-    }
+   
 
     public function matchRoute(){
         $requestUri = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');

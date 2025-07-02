@@ -20,4 +20,6 @@ class AssignTask extends Pivot {
         return $this->belongsTo(Task::class, 'task_id');
     }
 
+    
+
 }

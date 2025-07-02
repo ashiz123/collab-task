@@ -37,10 +37,14 @@ Class TaskAssignService implements TaskAssignInterface {
                     throw new \Exception("Failed to assign task to user ID {$user['id']}");
                 }
 
+                $taskTitle =  $assignUser->task->task;
+
                 $this->notificationService->send(
                     $assignUser->user_id, 
+                    $assignUser->id,
+                    "Task Assigned: $taskTitle",
                     "You are now assigned new task as $assignUser->role_name", 
-                    null,
+                    'task-assign',
                     'database'
                 );
 
@@ -84,8 +88,10 @@ Class TaskAssignService implements TaskAssignInterface {
 
                 $this->notificationService->send(
                     $assignedTaskCreatedById, 
+                    $assignTask->id,
+                    'Status updated',
                     "$assignedTaskTitle status updated to $assignedTaskStatus . ", 
-                    null,
+                    'task-status',
                     'database'
                 );
     

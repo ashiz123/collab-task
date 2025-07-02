@@ -10,11 +10,14 @@
 
     public function getAuthUser();
 
+    public function getAuthUserRole();
+
     public function getAuthId();
 
     public function removeAuthUser();
 
     public function isUserAuthenticated(): bool;
+
 
   }
 

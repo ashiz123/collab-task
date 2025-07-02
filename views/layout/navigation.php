@@ -1,4 +1,12 @@
 <?php
+use models\User;
+if(isset($_SESSION['auth_user'])){
+  $user = User::find($_SESSION['auth_user']['id']);
+  }
+?>
+
+
+<?php
 
 use utils\Logger;
 
@@ -38,13 +46,17 @@ use utils\Logger;
         <div class="dropdown">
   <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
   <?php if (isset($_SESSION['auth_user'])): ?>
+      
     <?= htmlspecialchars($_SESSION['auth_user']['firstname']) ?>
     <?= htmlspecialchars($_SESSION['auth_user']['lastname']) ?>
   <?php endif; ?>
   </button>
   <div class="dropdown-menu">
-    <a class="dropdown-item" href="#">My Profile</a>
-    <a class="dropdown-item" href="/notifications">My Notifications</a>
+    <a class="dropdown-item" href="/profile">My Profile</a>
+    <a class="dropdown-item" href="/notifications">
+      My Notifications
+      <span class="badge bg-danger ms-2 text-white" id='unread-count'><?= $user->unreadNotificationCount(); ?></span> 
+    </a>
     <a class="dropdown-item" href="/logout-user">Logout</a>
   </div>
 </div>

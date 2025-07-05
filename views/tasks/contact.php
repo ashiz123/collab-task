@@ -3,7 +3,9 @@
 <div class="container mt-5">
     <h2 class="mb-4">Contact Us</h2>
 
-   <?php if (isset($_SESSION['response'] ) && in_array($_SESSION['response'] ['status'], ['success', 'error'])):
+   <?php if (isset($_SESSION['response'] ) &&  
+   is_array($_SESSION['response']) && 
+   in_array($_SESSION['response'] ['status'], ['success', 'error'])):
       $response = $_SESSION['response']
       ?>
     <div class="alert alert-<?= $response['status'] === 'success' ? 'success' : 'danger' ?>" role="alert">

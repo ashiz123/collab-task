@@ -6,23 +6,43 @@ session_start();
 use core\Router;
 use config\Database;
 use utils\View;
-use utils\Logger;
-use services\AuthService;
-use controllers\TaskController;
-use controllers\UserController;
-use controllers\ContactController;
-use utils\AuthMiddleware;
+
+use App\Services\AuthService;
+use App\Services\SkillService;
+use App\Services\RoleService;
+
+use App\Middlewares\AuthMiddleware;
+use App\Middlewares\RoleMiddleware;
+
+use App\Controllers\AdminController;
+use App\Controllers\AssignTaskController;
+use App\Controllers\TaskController;
+use App\Controllers\UserController;
+use App\Controllers\ContactController;
+use App\Controllers\NotificationController;
+use App\Controllers\ProfileController;
+use App\Controllers\ProfileInfoController;
+use App\Controllers\SkillController;
+
 
 Database::getInstance();
 
 try{
     $taskController = new TaskController();
     $userController = new UserController();
+    $notificationController = new NotificationController();
     $contactController = new ContactController();
+    $assignTaskController = new AssignTaskController();
     $authService = AuthService::getInstance();
     $authMiddleware = new AuthMiddleware($authService);
-    $router = new Router();
-
+    $roleMiddleware = new RoleMiddleware($authService);
+    $router = new Router(); 
+    $profileController = new ProfileController();
+    $profileInfoController = new ProfileInfoController();
+    $skillService = new SkillService();
+    $skillController = new SkillController($skillService);
+    $roleService = new RoleService();
+    $adminController = new AdminController($roleService);
 
     //Index Routes
     $router->get('', fn() => View::render('tasks/home.php', 'Home'));
@@ -51,7 +71,25 @@ try{
     });
     $router->post('contact', [$contactController , 'createContact']);
 
+    //Profile Info Routes
+  
+    $router->get('create-profile-info', [$profileInfoController, 'createProfileInfo']);
+    $router->post('save-profile-info', [$profileInfoController, 'saveProfileInfo']);
 
+    //Skill Routes
+    $router->group('skills', function($router) use ($skillController){
+        $router->get('skills', [$skillController, 'index']);
+        $router->get('create-skill', [$skillController, 'create']);
+        $router->post('store-skill', [$skillController, 'store']);
+        $router->get('skill-list', [$skillController, 'skillList']);
+    });
+
+
+    //Profile Routes
+    $router->get('profile', [$profileController, 'profilePage']);
+   
+
+ 
     $router->get('verify-otp', function() {
         View::render('/users/verifyOtp.php', 'Verify User');
         // unset($_SESSION['register_user']);
@@ -61,14 +99,28 @@ try{
 
 
     //Status Routes
-    $router->post('update-status/{id}', fn($id) => $authMiddleware->handle(fn() => $taskController->updateStatus($id)));
+    $router->post('task/update-status/{id}', fn($id) => $authMiddleware->handle(fn() => $taskController->updateStatus($id)));
+    $router->get('task/{id}' , fn($id) => [$taskController->showTask($id)]);
 
+    //task assign routes
+    $router->post('assign-task/{id}', fn($id) => [$assignTaskController->assignTask($id)]);
+    $router->get('view-assign-task', fn() => $authMiddleware->handle(fn() => $assignTaskController->viewAssignTask()));
+    $router->post('assign-task/update-status/{assignId}', fn($assignId) => [$assignTaskController->changeStatus($assignId)]);
+    
+    //notifications routes
+    $router->get('notifications', fn() =>  [$notificationController->userNotification()]);
+    $router->post('notifications/{notificationId}', fn($notificationId)=> [$notificationController->notificationReadStatus($notificationId)]);
+    $router->get('notifications/unread-count',[$notificationController, 'getUnreadNotificationCount']);
 
-
+    //admin routes
+    $router->get('admin/roles', fn() => $roleMiddleware->handle(fn()=> $adminController->index()));
+    $router->post('admin/roles', fn() => $roleMiddleware->handle(fn() => $adminController->storeRole()));
+    // $router->get('admin/roles', fn() => [$adminController->showAllRoles()]);
+    
     $router->matchRoute();
 
     
-}
+} 
 
     
 catch(Exception $e){

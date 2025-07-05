@@ -1,0 +1,54 @@
+.profile-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+.form-label {
+    font-weight: 500;
+}
+.required-field::after {
+    content: " *";
+    color: red;
+}
+
+/* Avatar Upload Styles */
+.avatar-upload-container {
+    width: 200px;
+    height: 200px;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin: 1rem auto;
+    position: relative;
+}
+
+.avatar-upload-container i {
+    font-size: 2rem;
+    color: #6c757d;
+}
+
+.avatar-upload-container span {
+    margin-top: 0.5rem;
+}
+
+.avatar-upload-container input[type="file"] {
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+}
+
+#avatar-preview {
+    max-width: 150px;
+    max-height: 150px;
+    display: none;
+}

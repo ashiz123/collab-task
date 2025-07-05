@@ -19,7 +19,8 @@ A concise one-line description:
   - **Controllers** handle HTTP/input concerns  
   - **Services** encapsulate business logic  
   - **Models** represent database tables with Eloquent  
-- **Design Patterns**:  
+- **Design Patterns**: 
+  - **MVC Pattern** 
   - **Repository Pattern** (if you abstract queries)  
   - **Dependency Injection** (services injected into controllers)  
   - **Exception-Driven Flow** with custom exceptions

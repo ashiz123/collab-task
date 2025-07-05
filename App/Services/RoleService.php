@@ -2,6 +2,7 @@
 
 namespace  App\Services;
 
+use App\Exceptions\RoleNotFoundException;
 use App\Interfaces\RoleInterface;
 use App\Models\Role;
 
@@ -35,8 +36,8 @@ class RoleService implements RoleInterface{
           return $role->delete(); //Do soft deletion 
       }
       catch (ModelNotFoundException $e){
-        //   throw new RoleNotFoundException("Role with ID $id not found");
-        return false;
+          throw new RoleNotFoundException("Role with ID $id not found");
+           return false;
       }
         
     }

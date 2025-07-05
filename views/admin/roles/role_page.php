@@ -1,10 +1,15 @@
 
-<?php
-$errors = $_SESSION['errors_role'] ?? [];
-unset($_SESSION['errors_role']);
-?>
 
  <div class="container my-5" style="max-width: 600px;">
+
+
+ <?php if(isset($message)) : ?>
+    <div class="alert alert-success" role="alert">
+        <strong><?= htmlspecialchars($message) ?></strong> 
+    </div>
+    <?php endif ?>
+
+
     <div class="card shadow-sm border-0">
         <div class="card-header bg-primary text-white">
             <h5 class="mb-0">Create New Role</h5>
@@ -117,4 +122,7 @@ unset($_SESSION['errors_role']);
         </div>
     </div>
 </div>
+
+
+
 

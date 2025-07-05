@@ -34,24 +34,9 @@ class ComposerStaticInit4b3f46cc5aaf35ab7ec7e7f8a4a9721e
         array (
             'utils\\' => 6,
         ),
-        's' => 
-        array (
-            'services\\' => 9,
-        ),
-        'm' => 
-        array (
-            'models\\' => 7,
-            'migrations\\' => 11,
-            'middlewares\\' => 12,
-        ),
-        'i' => 
-        array (
-            'interfaces\\' => 11,
-        ),
         'c' => 
         array (
             'core\\' => 5,
-            'controllers\\' => 12,
             'config\\' => 7,
         ),
         'T' => 
@@ -104,6 +89,7 @@ class ComposerStaticInit4b3f46cc5aaf35ab7ec7e7f8a4a9721e
             'Dotenv\\' => 7,
             'Doctrine\\Inflector\\' => 19,
             'DeepCopy\\' => 9,
+            'Database\\' => 9,
         ),
         'C' => 
         array (
@@ -113,6 +99,10 @@ class ComposerStaticInit4b3f46cc5aaf35ab7ec7e7f8a4a9721e
         'B' => 
         array (
             'Brick\\Math\\' => 11,
+        ),
+        'A' => 
+        array (
+            'App\\' => 4,
         ),
     );
 
@@ -125,33 +115,9 @@ class ComposerStaticInit4b3f46cc5aaf35ab7ec7e7f8a4a9721e
         array (
             0 => __DIR__ . '/../..' . '/utils',
         ),
-        'services\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/services',
-        ),
-        'models\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/models',
-        ),
-        'migrations\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/migrations',
-        ),
-        'middlewares\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/middlewares',
-        ),
-        'interfaces\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/interfaces',
-        ),
         'core\\' => 
         array (
             0 => __DIR__ . '/../..' . '/core',
-        ),
-        'controllers\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/controllers',
         ),
         'config\\' => 
         array (
@@ -268,6 +234,10 @@ class ComposerStaticInit4b3f46cc5aaf35ab7ec7e7f8a4a9721e
         array (
             0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
         ),
+        'Database\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/Database',
+        ),
         'Carbon\\Doctrine\\' => 
         array (
             0 => __DIR__ . '/..' . '/carbonphp/carbon-doctrine-types/src/Carbon/Doctrine',
@@ -279,6 +249,10 @@ class ComposerStaticInit4b3f46cc5aaf35ab7ec7e7f8a4a9721e
         'Brick\\Math\\' => 
         array (
             0 => __DIR__ . '/..' . '/brick/math/src',
+        ),
+        'App\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/App',
         ),
     );
 

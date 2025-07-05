@@ -5,22 +5,25 @@ session_start();
 
 use core\Router;
 use config\Database;
-use controllers\AdminController;
-use controllers\AssignTaskController;
 use utils\View;
-use utils\Logger;
-use services\AuthService;
-use controllers\TaskController;
-use controllers\UserController;
-use controllers\ContactController;
-use controllers\NotificationController;
-use middlewares\AuthMiddleware;
-use middlewares\RoleMiddleware;
-use controllers\ProfileController;
-use controllers\ProfileInfoController;
-use controllers\SkillController;
-use services\SkillService;
-use services\RoleService;
+
+use App\Services\AuthService;
+use App\Services\SkillService;
+use App\Services\RoleService;
+
+use App\Middlewares\AuthMiddleware;
+use App\Middlewares\RoleMiddleware;
+
+use App\Controllers\AdminController;
+use App\Controllers\AssignTaskController;
+use App\Controllers\TaskController;
+use App\Controllers\UserController;
+use App\Controllers\ContactController;
+use App\Controllers\NotificationController;
+use App\Controllers\ProfileController;
+use App\Controllers\ProfileInfoController;
+use App\Controllers\SkillController;
+
 
 Database::getInstance();
 
@@ -110,7 +113,7 @@ try{
     $router->get('notifications/unread-count',[$notificationController, 'getUnreadNotificationCount']);
 
     //admin routes
-    $router->get('admin/roles', fn() => $roleMiddleware->handle(fn()=> $adminController->showAllRoles()));
+    $router->get('admin/roles', fn() => $roleMiddleware->handle(fn()=> $adminController->index()));
     $router->post('admin/roles', fn() => $roleMiddleware->handle(fn() => $adminController->storeRole()));
     // $router->get('admin/roles', fn() => [$adminController->showAllRoles()]);
     

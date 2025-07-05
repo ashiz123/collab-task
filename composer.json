@@ -15,17 +15,13 @@
 
     "autoload": {
         "psr-4": {
-            "models\\": "models/",
-            "controllers\\": "controllers/",
-            "middlewares\\" : "middlewares/",
+            "App\\": "App/",
+            "Database\\": "Database/",
             "core\\": "core/",
             "utils\\" : "utils/",
-            "config\\" : "config/",
-            "services\\": "services/",
-            "migrations\\": "migrations/",
-            "interfaces\\": "interfaces/"
-        }
-    },
+            "config\\" : "config/"
+          }
+     },
     "require-dev": {
         "phpunit/phpunit": "^10.5",
         "mockery/mockery": "^1.6"

@@ -1,5 +1,6 @@
 <?php
-use models\User;
+//TODO: watch out this part
+use App\Models\User;
 if(isset($_SESSION['auth_user'])){
   $user = User::find($_SESSION['auth_user']['id']);
   }

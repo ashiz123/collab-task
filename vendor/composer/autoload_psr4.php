@@ -8,13 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'voku\\' => array($vendorDir . '/voku/portable-ascii/src/voku'),
     'utils\\' => array($baseDir . '/utils'),
-    'services\\' => array($baseDir . '/services'),
-    'models\\' => array($baseDir . '/models'),
-    'migrations\\' => array($baseDir . '/migrations'),
-    'middlewares\\' => array($baseDir . '/middlewares'),
-    'interfaces\\' => array($baseDir . '/interfaces'),
     'core\\' => array($baseDir . '/core'),
-    'controllers\\' => array($baseDir . '/controllers'),
     'config\\' => array($baseDir . '/config'),
     'Twig\\' => array($vendorDir . '/twig/twig/src'),
     'Symfony\\Polyfill\\Php80\\' => array($vendorDir . '/symfony/polyfill-php80'),
@@ -43,7 +37,9 @@ return array(
     'Dotenv\\' => array($vendorDir . '/vlucas/phpdotenv/src'),
     'Doctrine\\Inflector\\' => array($vendorDir . '/doctrine/inflector/lib/Doctrine/Inflector'),
     'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
+    'Database\\' => array($baseDir . '/Database'),
     'Carbon\\Doctrine\\' => array($vendorDir . '/carbonphp/carbon-doctrine-types/src/Carbon/Doctrine'),
     'Carbon\\' => array($vendorDir . '/nesbot/carbon/src/Carbon'),
     'Brick\\Math\\' => array($vendorDir . '/brick/math/src'),
+    'App\\' => array($baseDir . '/App'),
 );

@@ -37,6 +37,9 @@ use utils\Logger;
       <li class="nav-item  <?php echo($current_page === 'contact') ? 'active' : '';  ?>">
         <a class="nav-link" href="/contact">Contact</a>
       </li>
+       <li class="nav-item  <?php echo($current_page === 'admin') ? 'active' : '';  ?>">
+        <a class="nav-link" href="/admin">Manage-User</a>
+      </li>
       
 </div>
      

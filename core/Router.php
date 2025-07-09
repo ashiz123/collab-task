@@ -23,6 +23,11 @@ class Router{
       $this->routes['POST'][$fullPath] = $handler;
   }
 
+      public function delete(string $path, callable $handler){
+        $fullPath = trim($this->currentPrefix . '/' . trim($path, '/'), '/');
+        $this->routes['DELETE'][$fullPath] = $handler;
+    }
+
   public function group(string $prefix, callable $callback){
     $previousPrefix = $this->currentPrefix;
     $this->currentPrefix = rtrim($previousPrefix . '/' . trim($prefix, '/'), '/');

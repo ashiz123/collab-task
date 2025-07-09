@@ -23,6 +23,7 @@ class ComposerStaticInit4b3f46cc5aaf35ab7ec7e7f8a4a9721e
         'ffecb95d45175fd40f75be8a23b34f90' => __DIR__ . '/..' . '/twig/twig/src/Resources/debug.php',
         'c7baa00073ee9c61edf148c51917cfb4' => __DIR__ . '/..' . '/twig/twig/src/Resources/escaper.php',
         'f844ccf1d25df8663951193c3fc307c8' => __DIR__ . '/..' . '/twig/twig/src/Resources/string_loader.php',
+        'dd88c4ba43fd62a918965bf796aeb365' => __DIR__ . '/../..' . '/App/helpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (

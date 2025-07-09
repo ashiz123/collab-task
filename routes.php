@@ -113,8 +113,11 @@ try{
     $router->get('notifications/unread-count',[$notificationController, 'getUnreadNotificationCount']);
 
     //admin routes
-    $router->get('admin/roles', fn() => $roleMiddleware->handle(fn()=> $adminController->index()));
+    $router->get('admin', fn() => $roleMiddleware->handle(fn() => $adminController->index()));
+    // $router->get('admin/roles', fn() => $roleMiddleware->handle(fn()=> $adminController->roles()));
     $router->post('admin/roles', fn() => $roleMiddleware->handle(fn() => $adminController->storeRole()));
+    $router->get('admin/role/delete/{id}', fn($id) => $roleMiddleware->handle(fn() => $adminController->deleteRole($id)));
+    $router->post('admin/assign-role', fn() => $roleMiddleware->handle(fn()=> $adminController->assignRole()));
     // $router->get('admin/roles', fn() => [$adminController->showAllRoles()]);
     
     $router->matchRoute();

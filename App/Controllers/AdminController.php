@@ -4,38 +4,41 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use utils\View;
 use App\Models\Role;
+use App\Models\User;
 use App\Services\RoleService;
+use utils\Template;
 use utils\CustomValidation;
 use utils\Flash;
-use utils\Logger;
+
 
 class AdminController extends BaseController{
 
   private $roleService; 
   private $validation;
+  private $authService;
 
     public function __construct(RoleService $roleService)
     {
        $this->roleService = $roleService;
        $this->validation = new CustomValidation();
+       
     }
 
-
-  public function index() {
-    $roles = Role::all();
-    $message = Flash::get('role_message'); 
-    $errors = Flash::get('role_errors');
-    // Logger::info( json_encode($errors));
-    View::render('/admin/roles/role_page.php', 'roles', [
-        'roles' => $roles,
+    public function index(){
+      $template = Template::getInstance();
+      $roles = Role::all();
+      $users = User::all();
+      $message = Flash::get('role_message'); 
+      $errors = Flash::get('role_errors');
+      View::render('/admin/create_role/page.php', 'Admin' , [
+        'template' => $template, 
+        'roles' => $roles, 
+        'users' => $users,
         'message' => $message,
-        'errors' => $errors
-    ]);
-}
+        'errors' => $errors]);
+    }
 
-
-
-    public function storeRole(){
+     public function storeRole(){
       $request = [
         'title' => $_POST['role_name'],
         'description' => $_POST['role_description']
@@ -45,14 +48,14 @@ class AdminController extends BaseController{
 
       if (!empty($errors)) {
           Flash::set('role_errors', $errors);
-          $this->redirect('/admin/roles');
+          $this->redirect('/admin');
           exit;
       }
 
       try{
           if($this->roleService->storeRole($request)){
-            Flash::set('role_message', 'Role addedd successfully');
-            $this->redirect('/admin/roles');
+            Flash::set('create_role', 'Role addedd successfully');
+            $this->redirect('/admin?tab=create-role');
             }
            
           
@@ -65,7 +68,45 @@ class AdminController extends BaseController{
 
 
     public function deleteRole($id){
-      $this->roleService->deleteRole($id);
+      
+      if($this->roleService->deleteRole($id)){
+          Flash::set('role_message', 'Role removed');
+          $this->redirect('/admin/roles');
+      }
+      
+    }
+
+
+    public function assignRole(){
+      
+        $request = [
+          'user_id' =>  $_POST['user_id'],
+          'role_id'=> $_POST['role_id']
+        ];
+
+       
+
+        //validation
+        if (empty($request['user_id']) || empty($request['role_id'])) {
+        http_response_code(400);
+        echo 'Missing user_id or role_id.';
+        return;
+        }
+
+      try{
+      $success = $this->roleService->assignRole($request);
+      if($success){
+         Flash::set('assign_role_message', 'Role assigned to user successfully');
+         $this->redirect('/admin?tab=assign-role');
+      }
+     }
+
+     catch(\Exception $e){
+          http_response_code(500);
+          // error_log($e->getMessage());
+           Flash::set('assign_role_message', 'Error while assigning user');
+           $this->redirect('/admin?tab=assign-role');
+     }
     }
 
 

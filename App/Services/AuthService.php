@@ -41,7 +41,7 @@ class AuthService implements AuthInterface{
         return null;
     }
 
-    public function getAuthId(){
+    public function getAuthId() : ?int{
         if(!empty($_SESSION['auth_user'])){
             return $_SESSION['auth_user']['id'];
         }

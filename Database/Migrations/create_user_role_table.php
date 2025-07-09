@@ -37,6 +37,8 @@ class UserRoleTable implements MigrationInterface {
 
                     $table->timestamp('assigned_at');
                     $table->timestamps();
+
+                    $table->unique('user_id', 'role_id');
                 });
 
                 echo 'User roles table created successfully'; 

@@ -12,6 +12,8 @@
 
     public function getAuthUserRole();
 
+    public function getAuthenticateUser();
+
     public function getAuthId();
 
     public function removeAuthUser();

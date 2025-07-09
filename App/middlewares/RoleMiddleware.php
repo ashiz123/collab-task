@@ -26,7 +26,7 @@ class RoleMiddleware{
         }
         }else{
              http_response_code(403);
-             echo 'No role setup for the user';
+             echo 'Unauthorized: No role setup for current logged in user';
              exit;
         }
         

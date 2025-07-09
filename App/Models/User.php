@@ -40,6 +40,18 @@ class User extends Model{
       return $this->belongsToMany(Role::class, 'user_role' , 'user_id', 'role_id');
    }
 
+   public function hasRole($role){
+      return $this->roles()->where('title', $role)->exists();
+   }
+
+   public function hasAnyRole(array $roles){
+      return $this->roles()->whereIn('title', $roles)->exists();
+   }
+
+   public function hasAlreadyAssigned(){
+      return $this->roles()->exists();
+   }
+
  
    public function getRoleAttribute(){
       return $this->roles()->first();

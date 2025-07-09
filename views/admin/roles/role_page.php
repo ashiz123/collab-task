@@ -111,7 +111,7 @@
                                     <td><?= htmlspecialchars($role['description']) ?: '<em class="text-muted">No description</em>' ?></td>
                                     <td>
                                         <a class="btn btn-primary" href="">Edit</a>
-                                         <a class="btn btn-danger" href="">Delete</a>
+                                         <a class="btn btn-danger" href="/admin/role/delete/<?= htmlspecialchars($role['id']) ?>">Delete</a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

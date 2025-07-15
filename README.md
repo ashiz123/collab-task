@@ -7,7 +7,7 @@ A concise one-line description:
 ---
 
 ## 🚀 Features
-- Role-based access control
+- Role based access control creation
 - Eloquent-powered models and migrations
 - Clean service/controller separation
 - Custom exception handling

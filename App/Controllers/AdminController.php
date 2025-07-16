@@ -15,7 +15,7 @@ class AdminController extends BaseController{
 
   private $roleService; 
   private $validation;
-  private $authService;
+  
 
     public function __construct(RoleService $roleService)
     {
@@ -27,7 +27,7 @@ class AdminController extends BaseController{
     public function index(){
       $template = Template::getInstance();
       $roles = Role::all();
-      $users = User::all();
+      $users = User::getAllSortedByRoleId();
       $message = Flash::get('role_message'); 
       $errors = Flash::get('role_errors');
       View::render('/admin/create_role/page.php', 'Admin' , [

@@ -26,6 +26,11 @@ use utils\Flash;
           Assign Roles
         </button> 
       </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link <?= isActiveTab('user-roles') ?>" id="user-role-tab" data-bs-toggle="tab" data-bs-target="#user-roles" type="button" role="tab">
+          User Roles
+        </button> 
+      </li>
     </ul>
 
 
@@ -56,6 +61,10 @@ use utils\Flash;
         <?php include __DIR__ . '/assign_role.php'; ?>
       </div>
     </div>
+
+     <div class="tab-pane fade <?= isActiveTabPanel('user-roles') ?>" id="user-roles" role="tabpanel">
+        <?php include __DIR__ . '/user_role.php'; ?>
+      </div>
 
     
    

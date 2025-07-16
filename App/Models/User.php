@@ -31,6 +31,15 @@ class User extends Model{
       return $this->firstname . ' ' . $this->lastname;
    }
 
+   public static function getAllSortedByRoleId()
+    {
+        return self::with('roles')->get()->sortBy(function ($user) {
+            return $user->roles->first()?->pivot->role_id ?? 9999;
+        });
+    }
+
+  
+
    public function predefinedSkills(){
       return $this->belongsToMany(PredefinedSkill::class, 'user_skills', 'user_id', 'skill_id');
       
@@ -39,6 +48,10 @@ class User extends Model{
    public function roles(){
       return $this->belongsToMany(Role::class, 'user_role' , 'user_id', 'role_id');
    }
+
+    public function getRoleTitleAttribute(){
+      return $this->roles->first()?->title ?? 'No Role'; 
+     }
 
    public function hasRole($role){
       return $this->roles()->where('title', $role)->exists();

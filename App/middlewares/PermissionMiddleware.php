@@ -1,5 +1,5 @@
 <?php
-
+//permission middleware
 
 namespace App\Middlewares;
 

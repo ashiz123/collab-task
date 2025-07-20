@@ -1,4 +1,7 @@
-
+<?php
+  $roles = $assignRoleData['roles'] ?? [];
+  $users = $assignRoleData['users'] ?? [];
+?>
 
 
         <form method="post" action = "/admin/assign-role">

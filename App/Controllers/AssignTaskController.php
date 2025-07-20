@@ -23,7 +23,17 @@ class AssignTaskController {
     }
 
 
- 
+ /**
+ * Assigns a task to one or more users.
+ *
+ * Reads user input from the request body and assigns the task
+ * using the task assignment service. Redirects on success, or
+ * returns an error response on failure.
+ *
+ * @param int $id The ID of the task to assign
+ *
+ * @return void
+ */
     public function assignTask($id){
        $users = file_get_contents('php://input');
        parse_str($users, $inputDatas);  

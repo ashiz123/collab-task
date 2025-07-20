@@ -8,7 +8,7 @@ class PermissionRegisteryService {
 
     public static function all() : array {
            return [
-           'admin' => ['accept_user', 'delete_user', 'assign_user'] , //manage user
+           'admin' => ['accept_user', 'delete_user', 'assign_user', 'create_task', 'assign_task'] , //manage user
            'manager' => ['create_task', 'assign_task', 'delete_task', 'set_task_complition', 'task_review'], //manage task
            'employee' => ['view_task', 'set_task_complition']
         ];

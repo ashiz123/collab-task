@@ -9,6 +9,9 @@ use App\Services\RoleService;
 use utils\Template;
 use utils\CustomValidation;
 use utils\Flash;
+use utils\Logger;
+use App\Services\TabDataService;
+use App\Factories\TabHandleFactory;
 
 
 class AdminController extends BaseController{
@@ -24,28 +27,24 @@ class AdminController extends BaseController{
        
     }
 
-    public function index(){
-      $template = Template::getInstance();
-      $roles = Role::all();
-      $users = User::getAllSortedByRoleId();
-      $message = Flash::get('role_message'); 
-      $errors = Flash::get('role_errors');
-      View::render('/admin/create_role/page.php', 'Admin' , [
-        'template' => $template, 
-        'roles' => $roles, 
-        'users' => $users,
-        'message' => $message,
-        'errors' => $errors]);
-    }
+    public function index() {
+        $activeTab = isset($_GET['tab']) ? $_GET['tab'] : 'create-role';
+        $makeActiveTab = TabHandleFactory::make($activeTab);
+        $data = $makeActiveTab->getData();    
+        $tabService = new TabDataService($activeTab, $data);    
+        View::render('/admin/admin_layout.php', 'Admin Panel', [
+            'tabDataService' => $tabService,
+        ]);
+      }
 
-     public function storeRole(){
+  
+      public function storeRole(){
       $request = [
         'title' => $_POST['role_name'],
         'description' => $_POST['role_description']
       ];
       
       $errors = $this->validation->validateRequireField($request);
-
       if (!empty($errors)) {
           Flash::set('role_errors', $errors);
           $this->redirect('/admin');
@@ -67,8 +66,8 @@ class AdminController extends BaseController{
     } 
 
 
+
     public function deleteRole($id){
-      
       if($this->roleService->deleteRole($id)){
           Flash::set('role_message', 'Role removed');
           $this->redirect('/admin/roles');
@@ -83,8 +82,6 @@ class AdminController extends BaseController{
           'user_id' =>  $_POST['user_id'],
           'role_id'=> $_POST['role_id']
         ];
-
-       
 
         //validation
         if (empty($request['user_id']) || empty($request['role_id'])) {
@@ -103,9 +100,8 @@ class AdminController extends BaseController{
 
      catch(\Exception $e){
           http_response_code(500);
-          // error_log($e->getMessage());
-           Flash::set('assign_role_message', 'Error while assigning user');
-           $this->redirect('/admin?tab=assign-role');
+          Flash::set('assign_role_message', 'Error while assigning user');
+          $this->redirect('/admin?tab=assign-role');
      }
     }
 

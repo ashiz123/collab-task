@@ -1,4 +1,9 @@
 
+       <?php
+        $roles = $roleListData['roles'] ?? [];
+        
+        ?>
+       
        <table class="table table-hover table-striped mb-0">
                     <colgroup>
                         <col style="width: 10%;">

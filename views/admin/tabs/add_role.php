@@ -1,3 +1,7 @@
+<?php
+ $errors = $createRoleData['errors'] ?? [];
+?>
+
 
 <div class="card-body">
   <form method="POST" action = '/admin/roles'>
@@ -46,6 +50,9 @@
     </div>
 <?php } ?>
   </div>
+
+
+
 
   <!-- Buttons -->
   <div class="d-flex justify-content-between align-items-center">

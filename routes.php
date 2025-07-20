@@ -23,7 +23,7 @@ use App\Controllers\NotificationController;
 use App\Controllers\ProfileController;
 use App\Controllers\ProfileInfoController;
 use App\Controllers\SkillController;
-
+use App\Middlewares\PermissionMiddleware;
 
 Database::getInstance();
 
@@ -36,6 +36,7 @@ try{
     $authService = AuthService::getInstance();
     $authMiddleware = new AuthMiddleware($authService);
     $roleMiddleware = new RoleMiddleware($authService);
+    $permissionMiddleware = new PermissionMiddleware($authService);
     $router = new Router(); 
     $profileController = new ProfileController();
     $profileInfoController = new ProfileInfoController();
@@ -59,7 +60,8 @@ try{
 
 
     //Task Routes
-    $router->get('create-task', fn() => $authMiddleware->handle(fn() => $taskController->showAddTaskForm()));
+    $router->get('create-task', fn() => $permissionMiddleware->handle(fn() => $taskController->showAddTaskForm(), 'create_task'));
+    // $router->get('create-task', fn() => $authMiddleware->handle(fn() => $taskController->showAddTaskForm()));
     $router->post('create-task', fn()=> $authMiddleware->handle(fn() => $taskController->createTask()));
     $router->get('tasks', fn() => $authMiddleware->handle(fn() =>  $taskController->showTasks()));
 
@@ -103,7 +105,7 @@ try{
     $router->get('task/{id}' , fn($id) => [$taskController->showTask($id)]);
 
     //task assign routes
-    $router->post('assign-task/{id}', fn($id) => [$assignTaskController->assignTask($id)]);
+    $router->post('assign-task/{id}', fn($id) => $permissionMiddleware->handle(fn() => [$assignTaskController->assignTask($id)], 'assign_task') );
     $router->get('view-assign-task', fn() => $authMiddleware->handle(fn() => $assignTaskController->viewAssignTask()));
     $router->post('assign-task/update-status/{assignId}', fn($assignId) => [$assignTaskController->changeStatus($assignId)]);
     
@@ -114,6 +116,7 @@ try{
 
     //admin routes
     $router->get('admin', fn() => $roleMiddleware->handle(fn() => $adminController->index()));
+    $router->get('admin/create-role', fn() => $authMiddleware->handle(fn() => $adminController->createRole()));
     // $router->get('admin/roles', fn() => $roleMiddleware->handle(fn()=> $adminController->roles()));
     $router->post('admin/roles', fn() => $roleMiddleware->handle(fn() => $adminController->storeRole()));
     $router->get('admin/role/delete/{id}', fn($id) => $roleMiddleware->handle(fn() => $adminController->deleteRole($id)));

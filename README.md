@@ -24,6 +24,7 @@ A concise one-line description:
   - **Repository Pattern** (if you abstract queries)  
   - **Dependency Injection** (services injected into controllers)  
   - **Exception-Driven Flow** with custom exceptions
+  - **Factory-Design-pattern** within the Admin tabs.
 
 ---
 

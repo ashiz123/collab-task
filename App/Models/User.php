@@ -32,15 +32,13 @@ class User extends Model{
    }
 
    public static function getAllSortedByRoleId()
-    {
-        return self::with('roles')->get()->sortBy(function ($user) {
+      {
+         return self::with('roles')->get()->sortBy(function ($user) {
             return $user->roles->first()?->pivot->role_id ?? 9999;
-        });
-    }
+         });
+      }
 
-  
-
-   public function predefinedSkills(){
+  public function predefinedSkills(){
       return $this->belongsToMany(PredefinedSkill::class, 'user_skills', 'user_id', 'skill_id');
       
    }

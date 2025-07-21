@@ -1,10 +1,14 @@
 <?php
- $errors = $createRoleData['errors'] ?? [];
+ $errors = $createPermissonData['errors'] ?? [];
+  $message = $createPermissonData['message'] ?? '';
 ?>
+
+<?php include __DIR__ . '/../../layout/success_alert.php' ?>
+
 
 
 <div class="card-body">
-  <form method="POST" action = '/admin/roles'>
+  <form method="POST" action = '/admin/permissions'>
   <!-- Role Name -->
   <div class="mb-4">
     <label for="permission_name" class="form-label fw-semibold">

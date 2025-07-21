@@ -100,7 +100,7 @@ class AdminController extends BaseController{
 
      catch(\Exception $e){
           http_response_code(500);
-          Flash::set('assign_role_message', 'Error while assigning user');
+          Flash::set('error_message', $e->getMessage());
           $this->redirect('/admin?tab=assign-role');
      }
     }

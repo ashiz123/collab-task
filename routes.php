@@ -22,8 +22,10 @@ use App\Controllers\ContactController;
 use App\Controllers\NotificationController;
 use App\Controllers\ProfileController;
 use App\Controllers\ProfileInfoController;
+use App\Controllers\PermissionController;
 use App\Controllers\SkillController;
 use App\Middlewares\PermissionMiddleware;
+use App\Services\PermissionService;
 
 Database::getInstance();
 
@@ -43,7 +45,9 @@ try{
     $skillService = new SkillService();
     $skillController = new SkillController($skillService);
     $roleService = new RoleService();
+    $permissionService = new PermissionService();
     $adminController = new AdminController($roleService);
+    $permissionController = new PermissionController($permissionService);
 
     //Index Routes
     $router->get('', fn() => View::render('tasks/home.php', 'Home'));
@@ -116,11 +120,13 @@ try{
 
     //admin routes
     $router->get('admin', fn() => $roleMiddleware->handle(fn() => $adminController->index()));
-    $router->get('admin/create-role', fn() => $authMiddleware->handle(fn() => $adminController->createRole()));
+    
     // $router->get('admin/roles', fn() => $roleMiddleware->handle(fn()=> $adminController->roles()));
     $router->post('admin/roles', fn() => $roleMiddleware->handle(fn() => $adminController->storeRole()));
+    $router->post('admin/permissions' , fn() => $roleMiddleware->handle(fn() => $permissionController->store()));
     $router->get('admin/role/delete/{id}', fn($id) => $roleMiddleware->handle(fn() => $adminController->deleteRole($id)));
     $router->post('admin/assign-role', fn() => $roleMiddleware->handle(fn()=> $adminController->assignRole()));
+    $router->post('admin/assign-permission', fn() => $roleMiddleware->handle(fn()=> $permissionController->assignPermission()));
     // $router->get('admin/roles', fn() => [$adminController->showAllRoles()]);
     
     $router->matchRoute();

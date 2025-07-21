@@ -1,6 +1,10 @@
 <?php
  $errors = $createRoleData['errors'] ?? [];
+ $message = $createRoleData['message'] ?? '';
 ?>
+
+<!-- alert message -->
+<?php include __DIR__ . '/../../layout/success_alert.php' ?>
 
 
 <div class="card-body">

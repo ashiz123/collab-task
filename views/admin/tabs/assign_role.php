@@ -3,7 +3,7 @@
   $users = $assignRoleData['users'] ?? [];
 ?>
 
-
+  <div class="card-body">
         <form method="post" action = "/admin/assign-role">
       
           <div class="mb-3">
@@ -29,6 +29,7 @@
 
           <button type="submit" class="btn btn-success">Assign Role</button>
         </form>
+  </div>
 
 
   

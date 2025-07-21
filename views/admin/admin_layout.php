@@ -29,7 +29,7 @@
     </li>
 </ul>
 
-
+<!-- internal admin routes -->
 <div class="tab-content mt-3" id="dashboardTabsContent">
   <div class="tab-pane fade show active" id="<?= htmlspecialchars($activeTab) ?>" role="tabpanel">
     <?php 
@@ -51,7 +51,7 @@
         include __DIR__ . '/tabs/assign_role.php';
         break;
       case 'assign-permission':
-        $assignPermission = $tabDataService->getAssignPermissionData();
+        $assignPermissionData = $tabDataService->getAssignPermissionData();
         include __DIR__ . '/tabs/assign_permission.php';
         break;
       case 'user-roles':

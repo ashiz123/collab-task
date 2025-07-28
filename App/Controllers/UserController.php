@@ -5,17 +5,17 @@ use Exception;
 use App\Services\AuthService;
 use App\Models\User;
 use App\Services\UserService;
+use App\Services\OtpService;
 use utils\Logger;
 use utils\View;
+use App\Controllers\BaseController;
 
 // use Respect\Validation\Validator as validation;
 
-
-
-
-class UserController {
+class UserController extends BaseController {
     protected  $userService;
     protected $authService;
+    protected $otpService;
 
 
 
@@ -23,107 +23,46 @@ class UserController {
     {
         $this->userService = new UserService();
         $this->authService = AuthService::getInstance();
+        $this->otpService = new OtpService();
     }
 
     public function register(){
         
+        //input data
         $email = trim($_POST['email']);
         $firstname = trim($_POST['firstname']);
         $lastname = trim($_POST['lastname']);
         $password = trim($_POST['password']);
 
+        //validation error to display 
         $errors = User::validateRegisterUser($email, $firstname, $lastname, $password);
-
-       if(empty($errors)){
-       if($this->userService->registerUser($email, $firstname, $lastname, $password)){
-            $_SESSION['register_email'] = $email;
-            header("Location: verify-otp");    
-            exit();
-       }else{
-            Logger::error("Failed to register the user");
-            View::render('/error.php', 'Failed to register the user');
-       }
-    }
-       else{
-        foreach($errors as $error){
-            echo "<p> $error </p>";
+        if(!empty($errors)){
+            View::render('/register-user.php', 'Register User', [
+                'errors' => $errors
+            ]);
+            return;
         }
-       }
-    }
 
-    
-
-
-
-
-
-
-    public function verifyOtp(){  
         try{
-        
-        $otp = $_POST['otp'];
-        $validUser = $this->userService->verifyOtp($otp);
-
-        
-        if($validUser->is_verified === 0){
-            header("Location: /verify-otp?error= user not verified");
-        }
-
-        if($validUser){
-            $this->authService->setAuthUser($validUser);
-            header("Location: /home" );
-        }else{
-            header("Location: /verify-otp?error=Invalid or Expired OTP");
-            exit();
-        }
-        }
-        catch(Exception $e){
-            header("Location: /error.php?message= " . urlencode($e->getMessage()));
-            exit();
-        }
-    }
-
-
-    public function resendOtp(){
-        $email = $_SESSION['register_email'];
-        $user = $this->userService->updateUserOtp($email);
-        Logger::info($user);
-
-
-
-        if($user){
-            if($this->userService->sendOtp($user)){
-                
-                $_SESSION['verify_otp'] = array(
-                    "status" => "success",
-                    "message" => "OTP send successfully. Please check your email."
-                );
-
-                header("Location: /verify-otp");
+            $registeredUser = $this->userService->registerUser($email, $firstname, $lastname, $password);
+            if($registeredUser){
+                $_SESSION['register_email'] = $email;
+                if(! $this->otpService->send($registeredUser)){
+                  throw new \Exception('Issue sending OTP to registered user');
+               }
+                View::render('/users/verify_otp.php', 'Verify User');
                 exit();
-            } 
-            
-            $_SESSION['verify_otp'] =  array(
-                "status" => "error",
-                "message" => "There is some issue sending OTP. Please report issue."
-            );
-            header("Location: /verify-otp" );
-            exit();
+            }
         }
 
-       else{
-        $_SESSION['verify_otp'] =  array(
-            "status" => "error",
-            "message" => "No user found."
-        );
-          header("Location: /error.php?message=No registered email");
-          exit();
-       }
+        catch(\Exception $e){
+            Logger::error('Failed to register user' . $e->getMessage());
+            echo 'Failed to registered user'. $e->getMessage();
+        }
+
+       
     }
-
-
-
-
+       
     public function login(){
         $email = trim($_POST['email']);
         $password = trim($_POST['password']);
@@ -134,7 +73,7 @@ class UserController {
            
             try{
                 $response = $this->userService->loginUser($email, $password);
-                Logger::info('res ' . json_encode($response));
+                
                 if(isset( $response['status']) && $response['status'] === 'unverified'){
                    $_SESSION['verify_otp'] = array(
                         'status' => 'error',
@@ -169,7 +108,7 @@ class UserController {
     public function logout(){
        
         $this->authService->removeAuthUser();
-        header("Location: /home");
+        $this->redirect('/home');
         
     }
 }

@@ -24,35 +24,18 @@ class UserService implements UserInterface{
        
     }
 
-    
-
-    public function registerUser($email, $firstname, $lastname, $password): bool
-    {
-    try {
-       
+    public function registerUser($email, $firstname, $lastname, $password) : User{
         $user = $this->createUser($email, $firstname, $lastname, $password);
-        if (!$user) {
-            Logger::error('creating user failed');
-            return false;   
-        }   
-
-        if($this->sendOtp($user) === false){
-            Logger::error("OTP email sending failed for email: " . $user->email);
-            return false;
-        } 
-
-        return true;
-
-       }   catch (Exception $e) {
-                Logger::error('User registration failed: ' . $e->getMessage());
-                echo 'Error: ' . $e->getMessage();
-                return false;
-            }
+        if(!$user){
+            throw new \Exception('User creation failed');
         }
 
+        return $user;
+     }
 
 
-        public function createUser($email, $firstname, $lastname, $password){
+
+        public function createUser($email, $firstname, $lastname, $password) : ?User{
             $user = new User;
             $user->email = $email;
             $user->firstname = $firstname;
@@ -65,85 +48,79 @@ class UserService implements UserInterface{
         }
 
 
-      
-
-
-
-        public function updateUserOtp($email){
-
-            
-            if($email){
-                $user = User::where('email', $email)->first();
-                $updateOtp = $user->update([
-                   'otp' => rand(100000, 999999),
-                   'otp_expires' => date("Y-m-d H:i:s", strtotime("+10 minutes"))
-                ]);
+        //  public function updateUserOtp($email){
+        //     if($email){
+        //         $user = User::where('email', $email)->first();
+        //         $updateOtp = $user->update([
+        //            'otp' => rand(100000, 999999),
+        //            'otp_expires' => date("Y-m-d H:i:s", strtotime("+10 minutes"))
+        //         ]);
                 
-                if($updateOtp){
-                    return $user;
-                }
+        //         if($updateOtp){
+        //             return $user;
+        //         }
                 
-                return null;
-            }
+        //         return null;
+        //     }
 
-            return null;
+        //     return null;
            
-        }
+        // }
 
 
-        public function sendOtp(User $user){
-            $subject = "Your OTP Code";
-            $message = "<p>Your OTP is: <strong>{$user->otp}</strong>.</p><p>It expires in 10 minutes.</p>";
-            return $this->mailer->sendOtpToEmail($user->email, $subject, $message);
-        }
+        // public function sendOtp(User $user){
+        //     $subject = "Your OTP Code";
+        //     $message = "<p>Your OTP is: <strong>{$user->otp}</strong>.</p><p>It expires in 10 minutes.</p>";
+        //     return $this->mailer->sendOtpToEmail($user->email, $subject, $message);
+        // }
 
 
-        public function verifyOtp($otp){
+        // public function verifyOtp($otp){
             
            
-            try{
-                $email = $_SESSION['register_email'];
-                $user = User::where('email', $email)->first();
+        //     try{
+        //         $email = $_SESSION['register_email'];
+        //         $user = User::where('email', $email)->first();
                
-                if(!$user){
-                    return null;
-                }
+        //         if(!$user){
+        //             return null;
+        //         }
 
-                if ($user->is_verified == 1) {
-                    error_log("User already verified: " . $email);
-                    Logger::error('User already verified');
-                    return null;
-                }
+        //         if ($user->is_verified == 1) {
+        //             error_log("User already verified: " . $email);
+        //             Logger::error('User already verified');
+        //             return null;
+        //         }
 
                
-               if(!hash_equals($user->otp, $otp)){
-                    return null;
-                }
+        //        if(!hash_equals($user->otp, $otp)){
+        //             return null;
+        //         }
 
-                if($user->otp_expires){
-                    $currentTime = new DateTime();
-                    $expiryTime = new DateTime($user->otp_expires);
+        //         if($user->otp_expires){
+        //             $currentTime = new DateTime();
+        //             $expiryTime = new DateTime($user->otp_expires);
 
-                    if($currentTime > $expiryTime){
-                        return null;
-                    }
-                }
+        //             if($currentTime > $expiryTime){
+        //                 return null;
+        //             }
+        //         }
 
-                Logger::info($user->update(['is_verified' => 1]));
+        //         Logger::info($user->update(['is_verified' => 1]));
 
-                if ($user->update(['is_verified' => 1])) {
-                    return $user; 
-                }
+        //         if ($user->update(['is_verified' => 1])) {
+        //             return $user; 
+        //         }
                 
-                return null;   
+        //         return null;   
                 
             
-            }
-            catch(Exception $e){
-                throw new \Exception('Error verifying OTP: ' . $e->getMessage());
-            }
+        //     }
+        //     catch(Exception $e){
+        //         throw new \Exception('Error verifying OTP: ' . $e->getMessage());
+        //     }
             
-        }
+        // }
 
        
 

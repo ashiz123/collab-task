@@ -1,6 +1,10 @@
+
+
 <?php
 $users = $userRolesData['users'] ?? [];
 $roles = $userRolesData['roles'] ?? [];
+
+
 ?>
 
 <!-- Filter form -->
@@ -37,9 +41,10 @@ $roles = $userRolesData['roles'] ?? [];
 <!-- User role table -->
 <table class="table table-hover table-striped mb-0">
   <colgroup>
-    <col style="width: 10%;">
-    <col style="width: 30%;">
-    <col style="width: 40%;">
+    <col style="width: 5%;">
+    <col style="width: 20%;">
+    <col style="width: 20%;">
+    <col style="width: 35%;">
     <col style="width: 20%;">
   </colgroup>
   <thead class="table-light">
@@ -47,6 +52,7 @@ $roles = $userRolesData['roles'] ?? [];
       <th scope="col">ID</th>
       <th scope="col">User name</th>
       <th scope="col">Role name</th>
+      <th scope = "col">Permissions</th>
       <th scope="col">Actions</th>
     </tr>
   </thead>
@@ -66,6 +72,16 @@ $roles = $userRolesData['roles'] ?? [];
           <td><?= $sn++ ?></td>
           <td><strong><?= htmlspecialchars($user->full_name) ?></strong></td>
           <td><?= htmlspecialchars(ucfirst(strtolower($roleTitle))) ?></td>
+           <td>
+            <?php 
+              $permissionTitles = $user->roles->first()?->permissions->pluck('title')->toArray() ?? [];
+              if (!empty($permissionTitles)) {
+                echo htmlspecialchars(ucfirst(strtolower(implode(', ', $permissionTitles))));
+            } else {
+                echo "No permissions set";
+            }
+            ?>
+           </td>
           <td>
             <a class="btn btn-primary" href="#">Edit</a>
             <?php if ($roleId): ?>

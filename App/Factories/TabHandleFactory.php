@@ -16,7 +16,6 @@ class TabHandleFactory{
             'assign-role' => new AssignRole(),
             'user-roles' => new UserRole(),
             'assign-permission' => new AssignPermission(),
-            'roles-list' => new RolesList()
-        };
+            };
     }
 }

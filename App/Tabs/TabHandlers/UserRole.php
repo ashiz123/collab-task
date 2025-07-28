@@ -10,8 +10,10 @@ class UserRole implements TabHandleInterface {
         return [
             'userRoles' => [
                'users' => User::getAllSortedByRoleId(),
-              'roles' => Role::all() // TODO: remove this.
+               'roles' => Role::all()
+              
             ]
         ];
     }
 }
+ 

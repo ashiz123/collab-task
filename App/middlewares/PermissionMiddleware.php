@@ -5,6 +5,7 @@ namespace App\Middlewares;
 
 
 use App\Services\PermissionRegisteryService;
+use utils\Logger;
 
 class PermissionMiddleware{
 
@@ -20,16 +21,22 @@ class PermissionMiddleware{
 
     public function handle(callable $next, $permission){
        
-        $role_title = $this->authService->getAuthUserRole()->title;
-        if(!$this->authService->getAuthenticateUser() || !$this->permission->doRoleHasPermission($role_title, $permission)){
+        try{
+        $role = $this->authService->getAuthUserRole();
+        if (!$role->hasPermission($permission)) {
             http_response_code(403);
             echo "Forbidden : Permission denied";
             return;
-        }
+        } 
 
-        return $next();
-     }
+          return $next();
+        }
+    
+    catch(\Exception $e){
+            print_r('Server error'. $e->getMessage());
+    }
 
 }
 
  
+}

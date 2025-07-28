@@ -2,17 +2,22 @@
 
 namespace App\Interfaces;
 
-
+use App\Models\User;
 
 interface UserInterface {
 
     
 
-    public function registerUser($email, $firstname, $lastname, $password);
+    public function registerUser($email, $firstname, $lastname, $password) : User;
 
-    public function verifyOtp($otp);
+   
 
     public function loginUser($email, $password);
+
+
+    public function getAllUsers();
+
+    
     
 
 

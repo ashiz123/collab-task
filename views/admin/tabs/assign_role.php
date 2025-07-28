@@ -1,7 +1,10 @@
 <?php
   $roles = $assignRoleData['roles'] ?? [];
   $users = $assignRoleData['users'] ?? [];
+  $message = $assignPermissionData['message'] ?? '';
 ?>
+
+<?php include __DIR__ . '/../../layout/success_alert.php' ?>
 
   <div class="card-body">
         <form method="post" action = "/admin/assign-role">

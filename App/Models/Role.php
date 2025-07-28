@@ -26,4 +26,22 @@ class Role extends Model{
         return $this->permissions()->where('permission_id', $permissionId)->exists();
     }
 
+
+    public function hasPermission($permissionName){
+       return $this->permissions()->where('title', $permissionName)->exists();
+    }
+
+    //  public static function doRoleHasPermission(string $role, string $permission): bool{
+    //     $permissions = self::getPermissionForRole($role); //get all the permissions by role 
+    //     Logger::info(json_encode($permissions) . $permission);
+    //     $hasPermission =  in_array($permission, $permissions); //check the pass permission exist in array in above permissions by role.
+    //     return $hasPermission;
+    // }
+
+
+
+   
+
+
+
 }

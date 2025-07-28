@@ -3,6 +3,7 @@
 namespace App\Services;
 use App\Interfaces\AuthInterface;
 use App\Models\User;
+use Exception;
 use utils\Logger;
 
 class AuthService implements AuthInterface{
@@ -54,20 +55,19 @@ class AuthService implements AuthInterface{
         
     }
 
-     public function getAuthUserRole(){
-       try{
-        
+    public function getAuthUserRole()
+    {
         $user = $this->getAuthenticateUser();
-        
-        if(!$user){
-             return 'user not found';
+
+        if (!$user) {
+            throw new \Exception('Authenticated user not found');
         }
+
+        if (!$user->role) {
+            throw new \Exception('User role is not set');
+        }
+
         return $user->role;
-       
-       }
-       catch(\Exception $e){
-        return 'Error occured:'. $e->getMessage();
-       }
     }
     
 

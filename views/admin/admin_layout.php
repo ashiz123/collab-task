@@ -15,9 +15,7 @@
     <li class="nav-item" role="presentation">
         <a href="?tab=create-permission" class="nav-link <?= $activeTab === 'create-permission' ? 'active' : '' ?>">Create Permission</a>
     </li>
-    <li class="nav-item" role="presentation">
-        <a href="?tab=roles-list" class="nav-link <?= $activeTab === 'roles-list' ? 'active' : '' ?>">Roles List</a>
-    </li>
+   
     <li class="nav-item" role="presentation">
         <a href="?tab=assign-role" class="nav-link <?= $activeTab === 'assign-role' ? 'active' : '' ?>">Assign Role</a>
     </li>
@@ -42,10 +40,7 @@
         $createPermissonData = $tabDataService->getCreatePermissionData();
         include __DIR__ . '/tabs/add_permission.php';
         break;
-      case 'roles-list':
-         $roleListData = $tabDataService->getRoleListData();
-         include __DIR__ . '/tabs/roles.php';
-         break;
+    
       case 'assign-role':
         $assignRoleData = $tabDataService->getAssignRoleData();
         include __DIR__ . '/tabs/assign_role.php';
